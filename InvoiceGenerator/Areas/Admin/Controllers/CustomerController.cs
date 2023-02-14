@@ -1,13 +1,41 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using InvoiceGenerator.Interfaces;
+using InvoiceGenerator.Models;
+using InvoiceGenerator.Models.Notification;
+using Microsoft.AspNetCore.Mvc;
 
 namespace InvoiceGenerator.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class CustomerController : Controller
     {
-        public  IActionResult  Index()
+        private readonly ICustomerService _customerService;
+        public CustomerController(ICustomerService customerService)
+        {
+            _customerService = customerService;
+        }
+
+        [HttpGet]
+        public IActionResult Index()
         {
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Index(Customer customer)
+        {
+            bool status = false;
+
+            if (ModelState.IsValid)
+            {
+                customer.CreatedOn = DateTime.Now;
+                status = await _customerService.AddCustomer(customer);
+            }
+            if (status)
+                TempData[MyAlerts.SUCCESS] = "Customer successfully!";
+            else
+                TempData[MyAlerts.ERROR] = "Error Occured Please try again!";
+
+            return RedirectToAction("Index");
         }
 
         //TODO

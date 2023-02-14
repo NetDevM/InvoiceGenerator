@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using InvoiceGenerator.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,9 +12,12 @@ namespace InvoiceGenerator.Data
         {
         }
 
+        public DbSet<Customer> Customers { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            #region Identity
             builder.HasDefaultSchema("Identity");
             builder.Entity<IdentityUser>(entity =>
             {
@@ -43,6 +47,8 @@ namespace InvoiceGenerator.Data
             {
                 entity.ToTable("UserTokens");
             });
+            #endregion
+
         }
     }
 }

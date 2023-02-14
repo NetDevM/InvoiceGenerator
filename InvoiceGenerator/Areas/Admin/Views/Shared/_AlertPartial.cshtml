@@ -1,0 +1,10 @@
+﻿@using InvoiceGenerator.Models.Notification;
+@foreach (string key in MyAlerts.ALL.Except(new[] { MyAlerts.ATTENTION }))
+{
+    if (TempData.ContainsKey(key))
+    {
+        <div class="alert alert-@key">
+            @TempData[key]
+        </div>
+    }
+}
