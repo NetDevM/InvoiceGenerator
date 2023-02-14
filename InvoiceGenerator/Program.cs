@@ -1,4 +1,6 @@
 using InvoiceGenerator.Data;
+using InvoiceGenerator.Data.Repository;
+using InvoiceGenerator.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,6 +15,13 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
+
+
+//add services
+#region Dependencies
+builder.Services.AddTransient<ICustomerService, CustomerRepository>();
+#endregion
+
 
 var app = builder.Build();
 
