@@ -4,8 +4,8 @@
     {
         public const string SUCCESS = "success";
         public const string ATTENTION = "attention";
-        public const string ERROR = "error";
-        public const string INFORMATION = "info";
+        public const string ERROR = "danger";
+        public const string INFORMATION = "primary";
 
         public static string[] ALL
         {

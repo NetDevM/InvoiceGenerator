@@ -40,6 +40,15 @@ namespace InvoiceGenerator.Data.Repository
         }
 
         /// <summary>
+        /// return all the customers
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<Customer>> Customers()
+        {
+            return await _context.Customers.ToListAsync();
+        }
+
+        /// <summary>
         /// Delete customer for removing customers implemented from Icustomerservice
         /// </summary>
         /// <param name="customer"></param>

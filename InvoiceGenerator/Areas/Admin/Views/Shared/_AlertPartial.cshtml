@@ -3,7 +3,7 @@
 {
     if (TempData.ContainsKey(key))
     {
-        <div class="alert alert-@key">
+        <div id="notificationbar" class="badge badge-@key">
             @TempData[key]
         </div>
     }

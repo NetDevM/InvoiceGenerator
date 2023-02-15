@@ -1,0 +1,84 @@
+﻿@model List<Customer>
+
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-body pb-0">
+                <div class="form-group">
+                    <div class="text-primary"><a class="btn btn-primary" asp-action="CreateCustomer" asp-controller="Customer"><i class="zmdi zmdi-plus-circle zmdi-hc-2x mr-1 icon" aria-hidden="true"></i> Add Customer</a></div>
+                </div>
+                <div class="d-flex align-items-center align-items-md-start justify-content-between mb-4">
+                    <h2 class="text-md mb-0">All Customers</h2>
+
+                </div> <!-- end of d-flex -->
+            </div> <!-- end of card-body -->
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Invoice Code</th>
+                            <th>Date</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                            <th>Print</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>#001AAA</td>
+                            <td>12/02/2023</td>
+                            <td>$300</td>
+                            <td> <span class="badge badge-success">Active</span></td>
+                            <td>
+                                <button type="button" class="btn"><i class="zmdi zmdi-print zmdi-hc-2x " aria-hidden="true"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>#001AAA</td>
+                            <td>12/02/2023</td>
+                            <td>$300</td>
+                            <td> <span class="badge badge-danger">Due</span></td>
+                            <td>
+                                <button type="button" class="btn "><i class="zmdi zmdi-print zmdi-hc-2x " aria-hidden="true"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>#001AAA</td>
+                            <td>12/02/2023</td>
+                            <td>$300</td>
+                            <td> <span class="badge badge-secondary">Cancelled</span></td>
+                            <td>
+                                <button type="button" class="btn  "><i class="zmdi zmdi-print zmdi-hc-2x " aria-hidden="true"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>#001AAA</td>
+                            <td>12/02/2023</td>
+                            <td>$300</td>
+                            <td> <span class="badge badge-success">Active</span></td>
+                            <td>
+                                <button type="button" class="btn "><i class="zmdi zmdi-print zmdi-hc-2x " aria-hidden="true"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>#001AAA</td>
+                            <td>12/02/2023</td>
+                            <td>$300</td>
+                            <td> <span class="badge badge-success">Active</span></td>
+                            <td>
+                                <button type="button" class="btn  "><i class="zmdi zmdi-print zmdi-hc-2x " aria-hidden="true"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div> <!-- end of table-responsive -->
+        </div> <!-- end of card -->
+    </div> <!-- end of col -->
+</div> <!-- end of row -->
