@@ -7,6 +7,7 @@ namespace InvoiceGenerator.Interfaces
         Task<bool> AddCustomer(Customer customer);
         Task<bool> UpdateCustomer(Customer customer);
         Task<bool> DeleteCustomer(Customer customer);
+        Task<List<Customer>> Customers();
 
     }
 }

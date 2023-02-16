@@ -15,13 +15,21 @@ namespace InvoiceGenerator.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Customers()
+        {
+            var allcustomers = await _customerService.Customers();
+            return View(allcustomers);
+        }
+
+
+        [HttpGet]
+        public IActionResult CreateCustomer()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(Customer customer)
+        public async Task<IActionResult> CreateCustomer(Customer customer)
         {
             bool status = false;
 
@@ -31,7 +39,7 @@ namespace InvoiceGenerator.Areas.Admin.Controllers
                 status = await _customerService.AddCustomer(customer);
             }
             if (status)
-                TempData[MyAlerts.SUCCESS] = "Customer successfully!";
+                TempData[MyAlerts.SUCCESS] = "Customer Added successfully!";
             else
                 TempData[MyAlerts.ERROR] = "Error Occured Please try again!";
 
@@ -41,20 +49,12 @@ namespace InvoiceGenerator.Areas.Admin.Controllers
         //TODO
         /*
          Features
-        allow to add customer types e.g walkin,existing,premium ( separate screen) crud for this ( show dropdown along with plus button
-        and tell if the value not exist in the dropdown click on add to add the customer type)
         CRUD customer
         import customer from excel
         export customer to excel
          
          */
 
-
-        //[HttpGet]
-        //public async Task<IActionResult> CreateCustomer()
-        //{
-
-        //}
 
 
     }

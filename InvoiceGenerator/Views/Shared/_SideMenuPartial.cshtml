@@ -6,40 +6,41 @@
         <nav class="sidebar-main-nav">
             <ul class="nav nav-pills flex-column">
                 <li class="nav-item">
-                    <a asp-controller="Dashboard" asp-action="Index" class="nav-link d-flex align-items-center active">
+                    
+                    <a asp-controller="Dashboard" is-active-route asp-action="Index" class="nav-link d-flex align-items-center">
                         <i class="zmdi zmdi-home icon icon-md mr-2" aria-hidden="true"></i>
                         Dashboard
                     </a> 
                     
                 </li>
                 <li class="nav-item">
-                    <a asp-controller="Customer" asp-action="Index" class="nav-link d-flex align-items-center">                        
+                    <a asp-controller="Customer" is-active-route asp-action="Customers" class="nav-link d-flex align-items-center">
                         <i class="zmdi zmdi-account icon icon-md mr-2"></i>
                         Customer
                     </a>
                    
                 </li>
                 <li class="nav-item">
-                   
-                      <a asp-controller="Products" asp-action="Index" class="nav-link d-flex align-items-center">
+
+                    <a asp-controller="Products" is-active-route asp-action="Index" class="nav-link d-flex align-items-center">
                         <i class="zmdi zmdi-archive icon icon-md mr-2" aria-hidden="true"></i>
                         Products
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a asp-controller="SalesInvoices" asp-action="Index" class="nav-link d-flex align-items-center">
+                    <a asp-controller="SalesInvoices" is-active-route asp-action="Index" class="nav-link d-flex align-items-center">
                         <i class="zmdi zmdi-shopping-cart icon icon-md mr-2" aria-hidden="true"></i>
                         Sales Invoice
                     </a> 
                 </li>
                 <li class="nav-item">
-                    <a asp-controller="SalesReports" asp-action="Index" class="nav-link d-flex align-items-center">
+                    <a asp-controller="SalesReports" is-active-route asp-action="Index" class="nav-link d-flex align-items-center">
                         <i class="zmdi zmdi-print icon icon-md mr-2" aria-hidden="true"></i>
                         Sales Reports
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a asp-controller="Settings" asp-action="Index" class="nav-link d-flex align-items-center">
+                    <a asp-controller="Settings" is-active-route asp-action="Index" class="nav-link d-flex align-items-center">
                         <i class="zmdi zmdi-settings icon icon-md mr-2" aria-hidden="true"></i>
                Settings
                     </a>
