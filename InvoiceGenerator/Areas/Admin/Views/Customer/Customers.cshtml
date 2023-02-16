@@ -1,83 +1,63 @@
 ﻿@model List<Customer>
+@{
+    ViewData["Title"] = "Customers";
+}
 
 <div class="row">
     <div class="col">
         <div class="card">
             <div class="card-body pb-0">
-                <div class="form-group">
-                    <div class="text-primary"><a class="btn btn-primary" asp-action="CreateCustomer" asp-controller="Customer"><i class="zmdi zmdi-plus-circle zmdi-hc-2x mr-1 icon" aria-hidden="true"></i> Add Customer</a></div>
-                </div>
-                <div class="d-flex align-items-center align-items-md-start justify-content-between mb-4">
-                    <h2 class="text-md mb-0">All Customers</h2>
-
+                <div class="d-flex align-items-left align-items-md-start justify-content-between mb-4">
+                    <h2 class="text-md mb-0 font-weight-bold">All Customers</h2>
+                    <div class="text-right">
+                        
+                        <a asp-controller="Customer" is-active-route asp-action="CreateCustomer" class="btn btn-primary">
+                            <i class="zmdi zmdi-plus-circle zmdi-hc-2x mr-1 icon" aria-hidden="true"></i>
+                            Add Customer
+                        </a>
+                    </div>
                 </div> <!-- end of d-flex -->
+
             </div> <!-- end of card-body -->
-            <div class="table-responsive">
-                <table class="table table-hover mb-0">
+            <div class="table-responsive col-12 col-lg-10 ml-0">
+                <table class="table table-hover mb-0" id="listtable">
                     <thead>
                         <tr>
-                            <th>#</th>
-                            <th>Invoice Code</th>
-                            <th>Date</th>
-                            <th>Total</th>
+
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
                             <th>Status</th>
-                            <th>Print</th>
+                            <th>Action</th>
 
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>#001AAA</td>
-                            <td>12/02/2023</td>
-                            <td>$300</td>
-                            <td> <span class="badge badge-success">Active</span></td>
-                            <td>
-                                <button type="button" class="btn"><i class="zmdi zmdi-print zmdi-hc-2x " aria-hidden="true"></i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>#001AAA</td>
-                            <td>12/02/2023</td>
-                            <td>$300</td>
-                            <td> <span class="badge badge-danger">Due</span></td>
-                            <td>
-                                <button type="button" class="btn "><i class="zmdi zmdi-print zmdi-hc-2x " aria-hidden="true"></i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>#001AAA</td>
-                            <td>12/02/2023</td>
-                            <td>$300</td>
-                            <td> <span class="badge badge-secondary">Cancelled</span></td>
-                            <td>
-                                <button type="button" class="btn  "><i class="zmdi zmdi-print zmdi-hc-2x " aria-hidden="true"></i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>#001AAA</td>
-                            <td>12/02/2023</td>
-                            <td>$300</td>
-                            <td> <span class="badge badge-success">Active</span></td>
-                            <td>
-                                <button type="button" class="btn "><i class="zmdi zmdi-print zmdi-hc-2x " aria-hidden="true"></i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>#001AAA</td>
-                            <td>12/02/2023</td>
-                            <td>$300</td>
-                            <td> <span class="badge badge-success">Active</span></td>
-                            <td>
-                                <button type="button" class="btn  "><i class="zmdi zmdi-print zmdi-hc-2x " aria-hidden="true"></i></button>
-                            </td>
-                        </tr>
+                        @foreach (var customer in Model)
+                        {
+                            <tr>
+
+                                <td>@customer.Name</td>
+                                <td>@customer.Email</td>
+                                <td>@customer.Phone</td>
+                                @if (customer.IsActive)
+                                {
+                                    <td> <span class="badge badge-success">Active</span></td>
+                                }
+                                else
+                                {
+                                    <td> <span class="badge badge-secondary">Inactive</span></td>
+                                }
+                                <td>
+                                    <button type="button" class="btn"><i class="zmdi zmdi-edit zmdi-hc " aria-hidden="true"></i></button>
+                                </td>
+                            </tr>
+                        }
+
+
                     </tbody>
                 </table>
+                <br />
             </div> <!-- end of table-responsive -->
         </div> <!-- end of card -->
     </div> <!-- end of col -->
