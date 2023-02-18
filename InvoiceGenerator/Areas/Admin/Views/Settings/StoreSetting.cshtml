@@ -1,0 +1,86 @@
+﻿@model StoreSettings
+@{
+    ViewData["Title"] = "Store Setting";
+}
+
+<div class="row">
+    <div class="col-12 col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="mb-4 text-md font-weight-bold">Add Store Setting</h2>
+                @{
+                    await Html.RenderPartialAsync("_AlertPartial");
+                }
+                <form class="row" method="post" asp-action="StoreSetting" asp-controller="Settings" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                    <div class="col-12 col-lg-10 pr-xl-3">
+                        <input type="hidden" asp-for="Id" />
+                        @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                        {
+                            <img id="blah" src="@Model.ImageUrl" alt="store logo image" style="width:100px;height:100px;" />
+                        }
+                        else
+                        {
+                            <img id="blah" src="~/images/mystore.png" alt="store logo image" style="width:100px;height:100px;" />
+                        }
+
+
+                        <div class="form-group">
+                            <label asp-for="StoreImage">Store Logo</label>
+                            <input asp-for="StoreImage" type="file" class="form-control" id="imgInp">
+                            <span asp-validation-for="StoreImage" class="text-danger"></span>
+
+                        </div> <!-- end of form-group -->
+
+                        <div class="form-group">
+                            <label asp-for="StoreName">Store Name</label>
+                            <input asp-for="StoreName" type="text" class="form-control">
+                            <span asp-validation-for="StoreName" class="text-danger"></span>
+
+                        </div> <!-- end of form-group -->
+
+                        <div class="form-group">
+                            <label asp-for="Currency">Currency</label>
+                            <input asp-for="Currency" type="text" class="form-control" />
+                            <span asp-validation-for="Currency" class="text-danger"></span>
+                        </div> <!-- end of form-group -->
+
+                        <div class="form-group">
+                            <label asp-for="Phone">Phone</label>
+                            <input asp-for="Phone" type="text" class="form-control">
+                            <span asp-validation-for="Phone" class="text-danger"></span>
+                        </div> <!-- end of form-group -->
+
+                        <div class="form-group">
+                            <label asp-for="Email">Email</label>
+                            <input asp-for="Email" type="text" class="form-control" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div> <!-- end of form-group -->
+
+                        <div class="form-group">
+                            <label asp-for="Address">Address</label>
+                            <textarea class="form-control" asp-for="Address" rows="3"></textarea>
+                        </div> <!-- end of form-group -->
+                        <!-- end of d-flex -->
+                        <div class="form-group">
+                            <div class="text-right"><button type="submit" class="btn btn-primary">Submit</button></div>
+                        </div>
+                    </div> <!-- end of col -->
+
+                </form> <!-- end of row -->
+            </div> <!-- end of card-body -->
+        </div> <!-- end of card -->
+    </div> <!-- end of col -->
+</div> <!-- end of row -->
+@section Scripts {
+    <partial name="~/Views/Shared/_ValidationScriptsPartial.cshtml" />
+
+}
+<script>
+    imgInp.onchange = evt => {
+        const [file] = imgInp.files
+        if (file) {
+            blah.src = URL.createObjectURL(file)
+        }
+    }
+</script>

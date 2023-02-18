@@ -5,7 +5,7 @@ namespace InvoiceGenerator.Areas.Admin.Controllers
     [Area("Admin")]
     public class SalesInvoicesController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Sales()
         {
             return View();
         }

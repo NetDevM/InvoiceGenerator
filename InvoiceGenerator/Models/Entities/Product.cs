@@ -1,4 +1,5 @@
-﻿using Microsoft.Build.Framework;
+﻿
+using System.ComponentModel.DataAnnotations;
 
 namespace InvoiceGenerator.Models
 {
@@ -10,7 +11,7 @@ namespace InvoiceGenerator.Models
         public string? ProductCode { get; set; }
 
         [Required]
-        public string?  Name { get; set; }
+        public string? Name { get; set; }
 
         [Required]
         public string? Price { get; set; }
