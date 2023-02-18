@@ -54,21 +54,30 @@ namespace InvoiceGenerator.Data.Repository
         /// <param name="customer"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public async Task<bool> DeleteCustomer(Customer customer)
+        public async Task<bool> DeleteCustomer(int customerid)
         {
             //get the customer if exist
-            var foundcustomer = await _context.Customers.FirstOrDefaultAsync(c => c.Id == customer.Id);
+            var foundcustomer = await _context.Customers.AsNoTracking().FirstOrDefaultAsync(c => c.Id == customerid);
 
             if (foundcustomer is not null)
             {
-                //soft delete
-                foundcustomer.IsActive = false;
-                _context.Entry(customer).State = EntityState.Modified;
+                _context.Remove(foundcustomer);
                 await _context.SaveChangesAsync();
                 return true;
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// get customer by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task<Customer> GetCustomerById(int id)
+        {
+            return await _context.Customers.AsNoTracking().FirstOrDefaultAsync(c => c.Id == id);
         }
 
         /// <summary>
@@ -80,7 +89,7 @@ namespace InvoiceGenerator.Data.Repository
         public async Task<bool> UpdateCustomer(Customer customer)
         {
             //get the customer if exist
-            var foundcustomer = await _context.Customers.FirstOrDefaultAsync(c => c.Id == customer.Id);
+            var foundcustomer = await _context.Customers.AsNoTracking().FirstOrDefaultAsync(c => c.Id == customer.Id);
 
             if (foundcustomer is not null)
             {

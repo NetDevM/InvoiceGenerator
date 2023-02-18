@@ -1,4 +1,5 @@
 ﻿using InvoiceGenerator.Interfaces;
+using InvoiceGenerator.Migrations;
 using InvoiceGenerator.Models;
 using InvoiceGenerator.Models.Notification;
 using Microsoft.AspNetCore.Mvc;
@@ -14,6 +15,10 @@ namespace InvoiceGenerator.Areas.Admin.Controllers
             _customerService = customerService;
         }
 
+        /// <summary>
+        /// List Customers
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Customers()
         {
@@ -43,19 +48,52 @@ namespace InvoiceGenerator.Areas.Admin.Controllers
             else
                 TempData[MyAlerts.ERROR] = "Error Occured Please try again!";
 
-            return RedirectToAction("Index");
+            return View();
         }
 
-        //TODO
-        /*
-         Features
-        CRUD customer
-        import customer from excel
-        export customer to excel
-         
-         */
+
+        [HttpGet]
+        public async Task<IActionResult> EditCustomer(int customerid)
+        {
+            var customer = await _customerService.GetCustomerById(customerid);
+
+            return View(customer);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditCustomer(Customer customer)
+        {
+            bool status = await _customerService.UpdateCustomer(customer);
+
+            if (status)
+                TempData[MyAlerts.SUCCESS] = "Customer Updated successfully!";
+            else
+                TempData[MyAlerts.ERROR] = "Error Occured Please try again!";
+
+            return View();
+        }
 
 
+        [HttpPost]
+        public async Task<IActionResult> DeleteCustomer(int customerid)
+        {
+            bool status = false;
+
+            if (customerid < 0)
+            {
+                TempData[MyAlerts.ERROR] = "Invalid Customer!";
+                return View("Customers");
+            }
+
+            status = await _customerService.DeleteCustomer(customerid);
+
+            if (status)
+                TempData[MyAlerts.SUCCESS] = "Customer Deleted successfully!";
+            else
+                TempData[MyAlerts.ERROR] = "Error Occured Please try again!";
+
+            return RedirectToAction("Customers");
+        }
 
     }
 }

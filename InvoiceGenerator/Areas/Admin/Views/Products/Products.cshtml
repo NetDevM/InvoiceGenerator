@@ -1,6 +1,6 @@
-﻿@model List<Customer>
+﻿@model List<Product>
 @{
-    ViewData["Title"] = "Customers";
+    ViewData["Title"] = "Products";
 }
 
 <div class="row">
@@ -8,16 +8,16 @@
         <div class="card">
             <div class="card-body pb-0">
                 <div class="d-flex align-items-left align-items-md-start justify-content-between mb-4">
-                    <h2 class="text-md mb-0 font-weight-bold">All Customers</h2>
+                    <h2 class="text-md mb-0 font-weight-bold">All Products</h2>
 
                     @{
                         await Html.RenderPartialAsync("_AlertPartial");
                     }
                     <div class="text-right">
-                        
-                        <a asp-controller="Customer" is-active-route asp-action="CreateCustomer" class="btn btn-primary">
+
+                        <a asp-controller="Products" is-active-route asp-action="CreateProduct" class="btn btn-primary">
                             <i class="zmdi zmdi-plus-circle zmdi-hc-2x mr-1 icon" aria-hidden="true"></i>
-                            Add Customer
+                            Add Product
                         </a>
                     </div>
                 </div> <!-- end of d-flex -->
@@ -28,38 +28,30 @@
                     <thead>
                         <tr>
 
+                            <th>Code</th>
                             <th>Name</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Status</th>
+                            <th>Price</th>                            
                             <th>Action</th>
 
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var customer in Model)
+                        @foreach (var product in Model)
                         {
                             <tr>
 
-                                <td>@customer.Name</td>
-                                <td>@customer.Email</td>
-                                <td>@customer.Phone</td>
-                                @if (customer.IsActive)
-                                {
-                                    <td> <span class="badge badge-success">Active</span></td>
-                                }
-                                else
-                                {
-                                    <td> <span class="badge badge-secondary">Inactive</span></td>
-                                }
+                                <td>@product.ProductCode</td>
+                                <td>@product.Name</td>
+                                <td>@product.Price</td>
+                                
                                 <td>
-                                    <form style="float:right;" method="post" asp-route-customerid="@customer.Id" asp-action="DeleteCustomer" asp-controller="Customer"
+                                    <form style="float:right;" method="post" asp-route-productid="@product.Id" asp-action="DeleteProduct" asp-controller="Products"
                                       onclick="return confirm('Are you sure you want to delete ?')">
                                         <button type="submit" class="btn"><i class="zmdi zmdi-delete zmdi-hc " aria-hidden="true"></i></button>
                                     </form>
-                                    <a style="float:right;" asp-action="EditCustomer" asp-controller="Customer" asp-route-customerid="@customer.Id" class="btn"><i class="zmdi zmdi-edit zmdi-hc " aria-hidden="true"></i></a>
+                                    <a style="float:right;" asp-action="EditProduct" asp-controller="Products" asp-route-productid="@product.Id" class="btn"><i class="zmdi zmdi-edit zmdi-hc " aria-hidden="true"></i></a>
 
-                                  
+
                                 </td>
                             </tr>
                         }

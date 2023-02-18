@@ -51,6 +51,9 @@ namespace InvoiceGenerator.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync()
         {
+          return  RedirectToPage("Login");
+
+            #region reset not allowed
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByEmailAsync(Input.Email);
@@ -78,7 +81,8 @@ namespace InvoiceGenerator.Areas.Identity.Pages.Account
                 return RedirectToPage("./ForgotPasswordConfirmation");
             }
 
-            return Page();
+            return Page(); 
+            #endregion
         }
     }
 }

@@ -100,14 +100,21 @@ namespace InvoiceGenerator.Areas.Identity.Pages.Account
         }
 
 
-        public async Task OnGetAsync(string returnUrl = null)
+        public async Task<IActionResult> OnGetAsync(string returnUrl = null)
         {
+            return RedirectToPage("Login");
+
+            #region Not allowed to register
             ReturnUrl = returnUrl;
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList(); 
+            #endregion
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
+            return RedirectToPage("Login");
+
+            #region NOt allowed to register
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
@@ -151,7 +158,8 @@ namespace InvoiceGenerator.Areas.Identity.Pages.Account
             }
 
             // If we got this far, something failed, redisplay form
-            return Page();
+            return Page(); 
+            #endregion
         }
 
         private IdentityUser CreateUser()

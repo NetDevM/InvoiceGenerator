@@ -1,5 +1,6 @@
 ﻿@model Customer
 
+ 
 
 <div class="row">
     <div class="col-12 col-lg-6">
@@ -9,7 +10,8 @@
                 @{
                     await Html.RenderPartialAsync("_AlertPartial");
                 }
-                <form class="row" method="post" asp-action="CreateCustomer" asp-controller="Customer">
+                <form class="row" method="post" asp-action="EditCustomer">
+                    <input type="hidden" asp-for="Id" />
                     <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
                     <div class="col-12 col-lg-10 pr-xl-3">
                         <div class="form-group">
@@ -41,7 +43,7 @@
                         </div> <!-- end of form-group -->
                         <div class="form-group">
                             <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" asp-for="IsActive" checked>
+                                <input type="checkbox" class="custom-control-input" asp-for="IsActive">
                                 <label class="custom-control-label" asp-for="IsActive">Customer Active</label>
                             </div> <!-- end of custom-checkbox -->
                         </div> <!-- end of form-group -->
