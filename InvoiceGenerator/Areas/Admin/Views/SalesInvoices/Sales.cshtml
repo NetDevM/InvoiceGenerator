@@ -1,1 +1,159 @@
-﻿<h1>Sales</h1>
+﻿@{
+    ViewData["Title"] = "New Sales";
+}
+
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="form-group col-lg-4 col-xl-4 mr-2">
+                        <label for="inputNormal">Customer</label>
+                        <select class="form-control">
+                            <option>Customer1</option>
+                        </select>
+                    </div> <!-- end of form-group -->
+                    <div class="form-group col-lg-3 col-xl-3 mr-2">
+                        <label for="inputNormal">Payment Method</label>
+                        <select class="form-control">
+                            <option>Cash</option>
+                            <option>Cheque</option>
+                            <option>Card</option>
+                        </select>
+                    </div> <!-- end of form-group -->
+                    <div class="form-group col-lg-3 col-xl-3 mr-2">
+                        <label for="inputNormal">Status</label>
+                        <select class="form-control">
+                            <option>Full Payment</option>
+                            <option>Partial Payment</option>
+                            <option>Due</option>
+                        </select>
+                    </div> <!-- end of form-group -->
+                    <div class="form-group col-lg-3 col-xl-3 mr-2">
+                        <label for="inputNormal">Date</label>
+                        <input type="text" disabled value="@DateTime.Now.ToShortDateString()" class="form-control" id="inputNormal">
+                    </div> <!-- end of form-group -->
+                    <div class="form-group col-lg-3 col-xl-3 mr-2 align-content-end align-self-end">
+                        <label for="inputNormal">Invoice Code</label>
+                        <input type="text" disabled value="@System.String.Format("E{0:000000}",42)" class="form-control" id="inputNormal">
+                    </div> <!-- end of form-group -->
+                </div> <!-- end of row -->
+
+                <div class="row">
+                    <div class="form-group col-lg-4 col-xl-4 mr-2">
+                        <label for="inputNormal">Search Product</label>
+                        <select class="form-control" id="ddlproduct">
+                            <option value="0">select</option>
+                            <option value="produc1">Product1</option>
+                            <option value="product2">Product2</option>
+                        </select>
+                    </div> <!-- end of form-group -->
+                    <div class="form-group col-lg-2 col-xl-2 mr-2">
+                        <label for="inputNormal">Unit Price</label>
+                        <input type="number" class="form-control" id="unitprice" />
+                    </div> <!-- end of form-group -->
+
+                    <div class="form-group col-lg-2 col-xl-2 mr-2">
+                        <label for="inputNormal">Quantity</label>
+                        <input type="number" class="form-control" id="quantity" />
+                    </div> <!-- end of form-group -->
+
+                    <div class="form-group col-lg-2 col-xl-2 mr-1 ">
+                        <label for="inputNormal">Total</label>
+                        <input type="number" class="form-control" disabled id="totalpriceforitem" />
+                    </div> <!-- end of form-group -->
+
+                    <div class="form-group col-lg-2 col-xl-2 mr-2 mt-5">
+                      <br/>
+                        <button class="form-control btn btn-primary" type="button" id="additem">
+                            <i class="zmdi zmdi-plus-circle zmdi-hc-2x mr-1 icon" aria-hidden="true"></i>
+                            Add
+                        </button>
+                    </div> <!-- end of form-group -->
+                   
+
+                </div> <!-- end of row -->
+
+                <div class="col-lg-9 col-xl-9">
+                    <div class="cart-container">
+                        <div class="cart-head">
+                            <div class="table-responsive">
+                                <table class="table table-borderless" id="productlineitems">
+                                    <thead>
+                                        <tr>
+
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Unit</th>
+                                            <th scope="col">Qty</th>
+                                            <th scope="col">Price</th>
+                                            <th scope="col" class="text-right"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                         
+                                    </tbody>
+                                </table>
+                            </div>
+                            <br />
+                            <br />
+                        </div>
+                        <div class="cart-body">
+                            <div class="row">
+
+                                <div class="col-md-12 order-2 order-lg-1 col-lg-5 col-xl-6">
+
+                                    <div class="order-note">
+
+                                        <div class="form-group col-lg-9 col-xl-9">
+                                            <label for="specialNotes">Special Note for this order:</label>
+                                            <textarea class="form-control" name="specialNotes" id="specialNotes" rows="2" placeholder="Message here"></textarea>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-12 order-1 order-lg-2 col-lg-7 col-xl-6">
+                                    <div class="order-total table-responsive ">
+                                        <table class="table table-borderless text-right">
+                                            <tbody>
+                                                <tr>
+                                                    <td>Sub Total :</td>
+                                                    <td>$1000.00</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Shipping :</td>
+                                                    <td><input type="number" class="form-control col-lg-3 col-xl-3 mr-2" /></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Tax(18%) :</td>
+                                                    <td>$180.00</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="f-w-7 font-18"><h4>Amount :</h4></td>
+                                                    <td class="f-w-7 font-18"><h4>$1180.00</h4></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cart-footer text-right">
+                            <button type="button" class="btn btn-primary">
+                                <i class="zmdi zmdi-print zmdi-hc-2x mr-1 icon" aria-hidden="true"></i>
+                                Generate Invoice
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+            </div> <!-- end of card-body -->
+        </div> <!-- end of card -->
+    </div> <!-- end of col -->
+</div> <!-- end of row -->
