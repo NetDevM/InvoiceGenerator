@@ -2,10 +2,12 @@
 using InvoiceGenerator.Migrations;
 using InvoiceGenerator.Models;
 using InvoiceGenerator.Models.Notification;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InvoiceGenerator.Areas.Admin.Controllers
 {
+    [Authorize]
     [Area("Admin")]
     public class SettingsController : Controller
     {

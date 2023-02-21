@@ -1,4 +1,5 @@
-﻿@{
+﻿@model SalesInvoice
+@{
     ViewData["Title"] = "New Sales";
 }
 
@@ -30,28 +31,21 @@
                             <option>Due</option>
                         </select>
                     </div> <!-- end of form-group -->
-                    <div class="form-group col-lg-3 col-xl-3 mr-2">
-                        <label for="inputNormal">Date</label>
-                        <input type="text" disabled value="@DateTime.Now.ToShortDateString()" class="form-control" id="inputNormal">
-                    </div> <!-- end of form-group -->
-                    <div class="form-group col-lg-3 col-xl-3 mr-2 align-content-end align-self-end">
-                        <label for="inputNormal">Invoice Code</label>
-                        <input type="text" disabled value="@System.String.Format("E{0:000000}",42)" class="form-control" id="inputNormal">
-                    </div> <!-- end of form-group -->
+                   
+                  
                 </div> <!-- end of row -->
 
                 <div class="row">
                     <div class="form-group col-lg-4 col-xl-4 mr-2">
                         <label for="inputNormal">Search Product</label>
-                        <select class="form-control" id="ddlproduct">
+                        <select class="form-control" id="ddlproduct" asp-items="@Model.Products">
                             <option value="0">select</option>
-                            <option value="produc1">Product1</option>
-                            <option value="product2">Product2</option>
                         </select>
+
                     </div> <!-- end of form-group -->
                     <div class="form-group col-lg-2 col-xl-2 mr-2">
                         <label for="inputNormal">Unit Price</label>
-                        <input type="number" class="form-control" id="unitprice" />
+                        <input type="number" class="form-control" disabled id="unitprice" />
                     </div> <!-- end of form-group -->
 
                     <div class="form-group col-lg-2 col-xl-2 mr-2">
@@ -65,13 +59,13 @@
                     </div> <!-- end of form-group -->
 
                     <div class="form-group col-lg-2 col-xl-2 mr-2 mt-5">
-                      <br/>
+                        <br />
                         <button class="form-control btn btn-primary" type="button" id="additem">
                             <i class="zmdi zmdi-plus-circle zmdi-hc-2x mr-1 icon" aria-hidden="true"></i>
                             Add
                         </button>
                     </div> <!-- end of form-group -->
-                   
+
 
                 </div> <!-- end of row -->
 
@@ -91,7 +85,6 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                         
                                     </tbody>
                                 </table>
                             </div>
@@ -117,8 +110,8 @@
                                         <table class="table table-borderless text-right">
                                             <tbody>
                                                 <tr>
-                                                    <td>Sub Total :</td>
-                                                    <td>$1000.00</td>
+                                                    <td>Discount :</td>
+                                                    <td><input type="number" class="form-control col-lg-3 col-xl-3 mr-2" /></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Shipping :</td>
@@ -129,7 +122,7 @@
                                                     <td>$180.00</td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="f-w-7 font-18"><h4>Amount :</h4></td>
+                                                    <td class="f-w-7 font-18"><h4>Grand Total :</h4></td>
                                                     <td class="f-w-7 font-18"><h4>$1180.00</h4></td>
                                                 </tr>
                                             </tbody>

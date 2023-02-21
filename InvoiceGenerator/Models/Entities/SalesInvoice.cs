@@ -1,5 +1,7 @@
 ﻿using InvoiceGenerator.Models.Entities;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace InvoiceGenerator.Models
 {
@@ -34,5 +36,8 @@ namespace InvoiceGenerator.Models
 
         public List<SalesProductLineItems>? SalesProductLineItems { get; set; }
 
+        [NotMapped]
+        public List<SelectListItem>? Products { get; set; }
+         
     }
 }

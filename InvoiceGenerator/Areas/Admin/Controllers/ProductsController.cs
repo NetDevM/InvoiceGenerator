@@ -2,9 +2,11 @@
 using InvoiceGenerator.Models.Notification;
 using InvoiceGenerator.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace InvoiceGenerator.Areas.Admin.Controllers
 {
+    [Authorize]
     [Area("Admin")]
     public class ProductsController : Controller
     {

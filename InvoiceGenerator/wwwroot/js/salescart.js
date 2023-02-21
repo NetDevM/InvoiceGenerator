@@ -10,23 +10,35 @@ var item = {
 
 $(document).ready(function () {
 
-
+     
     //get the product
     $("#ddlproduct").on('change', function (e) {
         item.productid = e.target.value;
         item.productname = e.target.selectedOptions[0].text;
-    });
 
-    $("#unitprice").on('input', function (e) {
-        item.unitprice = e.target.value;
-        setprice(item);
-    });
+        
+        //make ajax request to get unit price of the selected product
+        if (item.productid != 0) {
+            $.ajax({
+                type: 'GET',
+                url: '/Admin/SalesInvoices/GetProductByid?productid=' + item.productid,
+                contentType: 'json',
+                success: function (result) {
 
+                    //set the unit price of the product
+                    item.unitprice = result.price;
+
+                    //populate textbox
+                    $("#unitprice").val(item.unitprice);
+                }
+            });
+        }
+    });
+ 
     $("#quantity").on('input', function (e) {
         item.quantity = e.target.value;
         setprice(item);
     });
-
 
     $("#additem").on('click', function () {
 
