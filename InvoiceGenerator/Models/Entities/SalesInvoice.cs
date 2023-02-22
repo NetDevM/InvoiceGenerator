@@ -24,6 +24,8 @@ namespace InvoiceGenerator.Models
 
         public string? Notes { get; set; }
 
+        public float DiscountPercentage { get; set; }
+
         [Required]
         public float SubTtotal { get; set; }
 
@@ -38,6 +40,9 @@ namespace InvoiceGenerator.Models
 
         [NotMapped]
         public List<SelectListItem>? Products { get; set; }
-         
+
+        [NotMapped]
+        public List<SelectListItem>? Customers { get; set; }
+
     }
 }

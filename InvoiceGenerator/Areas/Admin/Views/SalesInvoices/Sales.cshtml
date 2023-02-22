@@ -11,24 +11,26 @@
                 <div class="row">
                     <div class="form-group col-lg-4 col-xl-4 mr-2">
                         <label for="inputNormal">Customer</label>
-                        <select class="form-control">
-                            <option>Customer1</option>
+                        <select class="form-control" id="ddlcustomers" asp-items="@Model.Customers">
+                            <option value="0">select</option>
                         </select>
                     </div> <!-- end of form-group -->
                     <div class="form-group col-lg-3 col-xl-3 mr-2">
                         <label for="inputNormal">Payment Method</label>
-                        <select class="form-control">
-                            <option>Cash</option>
-                            <option>Cheque</option>
-                            <option>Card</option>
+                        <select class="form-control" id="ddlpaymentmethod">
+                            <option value="select">select</option>
+                            <option value="cash">Cash</option>
+                            <option value="cheque">Cheque</option>
+                            <option value="card">Card</option>
                         </select>
                     </div> <!-- end of form-group -->
                     <div class="form-group col-lg-3 col-xl-3 mr-2">
                         <label for="inputNormal">Status</label>
-                        <select class="form-control">
-                            <option>Full Payment</option>
-                            <option>Partial Payment</option>
-                            <option>Due</option>
+                        <select class="form-control" id="ddlpaymentstatus">
+                            <option value="select">select</option>
+                            <option value="full payment">Full Payment</option>
+                            <option value="partial payment">Partial Payment</option>
+                            <option value="due">Due</option>
                         </select>
                     </div> <!-- end of form-group -->
                    
@@ -73,7 +75,7 @@
                     <div class="cart-container">
                         <div class="cart-head">
                             <div class="table-responsive">
-                                <table class="table table-borderless" id="productlineitems">
+                                <table class="table table-borderless table-hover table-striped" id="productlineitems">
                                     <thead>
                                         <tr>
 
@@ -110,20 +112,16 @@
                                         <table class="table table-borderless text-right">
                                             <tbody>
                                                 <tr>
-                                                    <td>Discount :</td>
-                                                    <td><input type="number" class="form-control col-lg-3 col-xl-3 mr-2" /></td>
-                                                </tr>
+                                                    <td>Discount (%) :</td>
+                                                    <td><input type="number" id="discount" class="form-control col-lg-2 col-xl-2 mr-2" min="1" /></td>
+                                                </tr> 
                                                 <tr>
                                                     <td>Shipping :</td>
-                                                    <td><input type="number" class="form-control col-lg-3 col-xl-3 mr-2" /></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Tax(18%) :</td>
-                                                    <td>$180.00</td>
-                                                </tr>
+                                                    <td><input type="number" id="shipping" class="form-control col-lg-3 col-xl-3 mr-2" /></td>
+                                                </tr>                                               
                                                 <tr>
                                                     <td class="f-w-7 font-18"><h4>Grand Total :</h4></td>
-                                                    <td class="f-w-7 font-18"><h4>$1180.00</h4></td>
+                                                    <td class="f-w-7 font-18"><h4 id="grandtotal">0</h4></td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -132,7 +130,11 @@
                             </div>
                         </div>
                         <div class="cart-footer text-right">
-                            <button type="button" class="btn btn-primary">
+                            <button type="button" class="btn btn-primary" id="calculatetotal">
+                                <i class="zmdi zmdi-refresh-alt zmdi-hc-2x mr-1 icon"  aria-hidden="true"></i>
+                                Calculate
+                            </button>
+                            <button type="button" class="btn btn-primary" id="generateinvoice">
                                 <i class="zmdi zmdi-print zmdi-hc-2x mr-1 icon" aria-hidden="true"></i>
                                 Generate Invoice
                             </button>
