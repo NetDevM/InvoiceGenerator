@@ -22,6 +22,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<ICustomerService, CustomerRepository>();
 builder.Services.AddTransient<IProductService, ProductRepository>();
 builder.Services.AddTransient<IStoreSettingService, StoreSettingRepository>();
+builder.Services.AddTransient<ISalesInvoiceService, SalesInvoiceRepository>();
 #endregion
 
 

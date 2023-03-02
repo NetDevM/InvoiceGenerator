@@ -1,21 +1,23 @@
-﻿var invoicedata = {
-    products: [],
+﻿var orders = {
+    LineItems: [],
     customerid: '',
     paymentmethod: '',
     paymentstatus: '',
     notes: '',
-    shipping: '',
+    shipping:0,
     tax: 0,
     grandtotal: 0,
     discountpercentage: 0
 };
 var items = [];
 var item = {
-    productname: '',
+    
     productid: '0',
     unitprice: '',
     quantity: '',
-    totalpriceforitem: ''
+    price: '',
+    SalesInvoiceId: 0,
+    SalesInvoice: null
 };
 var grandtotal = 0;
 var shippingamount = 0;
@@ -52,19 +54,19 @@ $(document).ready(function () {
     });
 
     $("#ddlcustomers").on('change', function (e) {
-        invoicedata.customerid = e.target.value;
+        orders.customerid = e.target.value;
     });
 
     $("#ddlpaymentmethod").on('change', function (e) {
-        invoicedata.paymentmethod = e.target.value;
+        orders.paymentmethod = e.target.value;
     });
 
     $("#ddlpaymentstatus").on('change', function (e) {
-        invoicedata.paymentstatus = e.target.value;
+        orders.paymentstatus = e.target.value;
     });
 
     $("#specialNotes").on('change', function (e) {
-        invoicedata.notes = e.target.value;
+        orders.notes = e.target.value;
     });
 
 
@@ -132,10 +134,8 @@ $(document).ready(function () {
     $("#generateinvoice").on('click', function () {
 
         //push the items to invoicedata products array
-        invoicedata.products.push(items);
-
-
-        createinvoicedata();
+        orders.LineItems.push(items);
+        createinvoicedata(orders);
     })
 
 });
@@ -146,7 +146,7 @@ const setprice = (product) => {
 
     if (product.unitprice != NaN && product.quantity != NaN) {
         $("#totalpriceforitem").val(product.unitprice * product.quantity);
-        item.totalpriceforitem = product.unitprice * product.quantity;
+        item.price = product.unitprice * product.quantity;
     }
 
 
@@ -175,17 +175,17 @@ const computetotal = () => {
 
     if (discountamount != 0 && discountamount != "" && discountamount != undefined && discountamount != NaN) {
         grandtotal -= parseInt((discountamount / 100) * grandtotal);
-        invoicedata.discountpercentage = discountamount;
+        orders.discountpercentage = discountamount;
     }
 
     if (shippingamount != 0 && shippingamount != "" && shippingamount != undefined && shippingamount != NaN) {
         grandtotal += parseInt(shippingamount);
-        invoicedata.shipping = shippingamount;
+        orders.shipping = shippingamount;
     }
 
 
     $("#grandtotal").text(grandtotal.toLocaleString());
-    invoicedata.grandtotal = grandtotal;
+    orders.grandtotal = grandtotal;
 
 
 }
@@ -197,7 +197,7 @@ const appenditemrow = (item) => {
                 <td>${item.productname}</td>
                 <td>${item.unitprice}</td>
                 <td>${item.quantity}</td>
-                <td class='itemtotal_price'> ${item.totalpriceforitem} </td>
+                <td class='itemtotal_price'> ${item.price} </td>
                 <td class="text-right"><button type="button" id="removeitem" onclick="removeitem('tablerow_${item.productid}','${item.productid}')" class="btn"><i class="zmdi zmdi-delete zmdi-hc-2x " aria-hidden="true"></i></button></td>
             </tr>`;
 
@@ -220,11 +220,24 @@ const clearitem = () => {
         productid: '0',
         unitprice: '',
         quantity: '',
-        totalpriceforitem: ''
+        price: ''
     };
 }
 
-const createinvoicedata = () => {
+const createinvoicedata = (order) => {
 
-    console.log(invoicedata);
+    var settings = {
+        url: "/Admin/SalesInvoices/AddSales",
+        method: "POST",
+        timeout: 0,
+        headers: {
+            "Content-Type": "application/json"
+        },
+        "data": JSON.stringify({ "Lineitems": orders.LineItems.flat(), "Orders": orders }),
+    };
+
+    $.ajax(settings).done(function (response) {
+        console.log(response);
+    });
+
 }

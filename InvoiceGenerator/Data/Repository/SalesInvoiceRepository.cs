@@ -1,5 +1,6 @@
 ﻿using InvoiceGenerator.Interfaces;
 using InvoiceGenerator.Models;
+using NuGet.Configuration;
 
 namespace InvoiceGenerator.Data.Repository
 {
@@ -24,7 +25,13 @@ namespace InvoiceGenerator.Data.Repository
         /// <exception cref="NotImplementedException"></exception>
         public async Task<bool> AddInvoice(SalesInvoice invoice)
         {
-            throw new NotImplementedException();
+            await _context.SalesInvoices.AddAsync(invoice);
+            int entries = await _context.SaveChangesAsync();
+
+            if (entries > 0)
+                return true;
+            else
+                return false;
         }
 
         public Task<bool> DeleteInvoice(string invoiceid)

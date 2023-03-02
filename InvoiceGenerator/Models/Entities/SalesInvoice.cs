@@ -11,7 +11,7 @@ namespace InvoiceGenerator.Models
         public int SalesInvoiceId { get; set; }
 
         [Required]
-        public string? CustomerName { get; set; }
+        public int CustomerId { get; set; }
 
         public string? PaymentMethod { get; set; }
 
@@ -25,24 +25,25 @@ namespace InvoiceGenerator.Models
         public string? Notes { get; set; }
 
         public float DiscountPercentage { get; set; }
-
-        [Required]
-        public float SubTtotal { get; set; }
+ 
 
         public float Shipping { get; set; }
 
         public float Tax { get; set; }
+         
 
         [Required]
         public float GrandTotal { get; set; }
 
         public List<SalesProductLineItems>? SalesProductLineItems { get; set; }
 
+        #region For View
         [NotMapped]
         public List<SelectListItem>? Products { get; set; }
 
         [NotMapped]
-        public List<SelectListItem>? Customers { get; set; }
+        public List<SelectListItem>? Customers { get; set; } 
+        #endregion
 
     }
 }

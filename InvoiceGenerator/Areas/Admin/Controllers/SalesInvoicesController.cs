@@ -1,23 +1,28 @@
 ﻿using InvoiceGenerator.Interfaces;
 using InvoiceGenerator.Models;
+using InvoiceGenerator.Models.Entities;
+using InvoiceGenerator.Models.Notification;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace InvoiceGenerator.Areas.Admin.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Area("Admin")]
     public class SalesInvoicesController : Controller
     {
         private readonly IProductService _productService;
         private readonly ICustomerService _customerService;
-        public SalesInvoicesController(IProductService productService, ICustomerService customerService)
+        private readonly ISalesInvoiceService _salesinvoiceservice;
+        public SalesInvoicesController(IProductService productService, ICustomerService customerService, ISalesInvoiceService salesinvoiceservice)
         {
             _productService = productService;
             _customerService = customerService;
+            _salesinvoiceservice = salesinvoiceservice;
         }
 
+        [HttpGet]
         public async Task<IActionResult> Sales()
         {
             //populate productlist dropdown
@@ -51,6 +56,42 @@ namespace InvoiceGenerator.Areas.Admin.Controllers
         }
 
 
+        [HttpPost]
+        [Consumes("application/json")]
+        public async Task<JsonResult> AddSales([FromBody] SalesOrder salesorder)
+        {
+
+            //map
+            SalesInvoice salesorderinvoice = new()
+            {
+                GrandTotal = salesorder.Orders.GrandTotal,
+                PaymentMethod = salesorder.Orders.PaymentMethod,
+                PaymentStatus = salesorder.Orders.PaymentStatus,
+                Shipping = salesorder.Orders.Shipping,
+                CustomerId = salesorder.Orders.CustomerId,
+                Tax = salesorder.Orders.Tax,
+                DiscountPercentage = salesorder.Orders.DiscountPercentage,
+                SalesProductLineItems = salesorder.LineItems,
+                InvoiceCode=Guid.NewGuid().ToString()
+            };
+
+
+            bool status = await _salesinvoiceservice.AddInvoice(salesorderinvoice);
+
+            if (status)
+                return Json("Sales Added successfully!");
+            else
+                return Json("Error Occured Please try again!");
+
+        }
+
+
+        /// <summary>
+        /// called in salescart.js
+        /// used in product dropdown to fetch product by id in json format
+        /// </summary>
+        /// <param name="productid"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<JsonResult> GetProductByid(int productid)
         {
@@ -58,4 +99,6 @@ namespace InvoiceGenerator.Areas.Admin.Controllers
             return Json(products);
         }
     }
+
+
 }

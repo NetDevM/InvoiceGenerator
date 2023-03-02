@@ -8,7 +8,7 @@ namespace InvoiceGenerator.Models.Entities
         public int LineItemId { get; set; }
 
         [Required]
-        public string? ProductName { get; set; }
+        public int ProductId { get; set; }
 
         [Required]
         public int UnitPrice { get; set; }
