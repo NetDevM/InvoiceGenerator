@@ -1,0 +1,234 @@
+﻿@model SalesInvoice
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Invoice</title>
+
+    <style>
+        .invoice-box {
+            max-width: 800px;
+            margin: auto;
+            padding: 30px;
+            border: 1px solid #eee; 
+            font-size: 16px;
+            line-height: 24px;
+            font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+            color: #555;
+        }
+
+        @@page {
+            size: auto; /* auto is the initial value */
+            margin: 0; /* this affects the margin in the printer settings */
+        }
+
+        @@media print {
+            a[href]:after {
+                content: none !important;
+            }
+
+            @@page {
+                margin-top: 0;
+                margin-bottom: 0;
+            }
+
+            body {
+                padding-top: 72px;
+                padding-bottom: 72px;
+            }
+
+            #btnprint {
+                display: none;
+            }
+        }
+
+        .invoice-box table {
+            width: 100%;
+            line-height: inherit;
+            text-align: left;
+        }
+
+            .invoice-box table td {
+                padding: 5px;
+                vertical-align: top;
+            }
+
+            .invoice-box table tr td:nth-child(2) {
+                text-align: right;
+            }
+
+            .invoice-box table tr.top table td {
+                padding-bottom: 20px;
+            }
+
+                .invoice-box table tr.top table td.title {
+                    font-size: 45px;
+                    line-height: 45px;
+                    color: #333;
+                }
+
+            .invoice-box table tr.information table td {
+                padding-bottom: 40px;
+            }
+
+            .invoice-box table tr.heading td {
+                background: #eee;
+                border-bottom: 1px solid #ddd;
+                font-weight: bold;
+            }
+
+            .invoice-box table tr.details td {
+                padding-bottom: 20px;
+            }
+
+            .invoice-box table tr.item td {
+                border-bottom: 1px solid #eee;
+            }
+
+            .invoice-box table tr.item.last td {
+                border-bottom: none;
+            }
+
+            .invoice-box table tr.total td:nth-child(2) {
+                border-top: 2px solid #eee;
+                font-weight: bold;
+            }
+
+        .lastitemcolumn {
+            text-align: right;
+        }
+
+        @@media only screen and (max-width: 600px) {
+            .invoice-box table tr.top table td {
+                width: 100%;
+                display: block;
+                text-align: center;
+            }
+
+            .invoice-box table tr.information table td {
+                width: 100%;
+                display: block;
+                text-align: center;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+    <button class="btn btn-primary" onclick="printinvoice()" id="btnprint" type="button" style="color: #fff;
+    background-color: #2196f3;
+    border-color: #2196f3;
+    box-shadow: 0 3px 1px -2px rgb(0 0 0 / 2%), 0 2px 2px 0 rgb(0 0 0 / 14%), 0 1px 5px 0 rgb(0 0 0 / 12%);
+cursor:pointer;
+margin-left: 45%;
+
+    text-align: center;
+    width: 10%;
+    font-weight: bold;
+">
+        Print
+    </button>
+    <div id="invoice-box" class="invoice-box">
+        <table cellpadding="0" cellspacing="0">
+            <tr class="top">
+                <td colspan="3">
+                    <table>
+                        <tr>
+                            <td class="title">
+                                <img src="https://img.freepik.com/free-vector/minimal-yellow-invoice-template-vector-design_1017-12070.jpg?w=740&t=st=1678110140~exp=1678110740~hmac=ad77ba455c2f6bfdf5b9a0fe1d074df815d8208da3f6153c9248b443d64d890f" style="width: 100%; max-width: 300px" />
+                            </td>
+                            <td>
+                                Invoice #: 123<br />
+                                Created: January 1, 2015<br />
+                                Due: February 1, 2015
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <tr class="information">
+                <td colspan="3">
+                    <table>
+                        <tr>
+                            <td>
+                                Sparksuite, Inc.<br />
+                                12345 Sunny Road<br />
+                                Sunnyville, CA 12345
+                            </td>
+
+                            <td>
+                                Acme Corp.<br />
+                                John Doe<br />
+                                john@example.com
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <tr class="heading">
+                <td colspan="2">Payment Method</td>
+                <td>Check #</td>
+            </tr>
+
+            <tr class="details">
+                <td colspan="2">Check</td>
+
+                <td>1000</td>
+            </tr>
+
+            <tr class="heading">
+                <td>Item</td>
+                <td>Quantity </td>
+                <td class="lastitemcolumn">Price</td>
+            </tr>
+
+            <tr class="item">
+                <td>Website design</td>
+                <td>2</td>
+                <td class="lastitemcolumn">$33300</td>
+            </tr>
+
+            <tr class="item">
+                <td>Hosting (3 months)</td>
+                <td>2</td>
+                <td class="lastitemcolumn"> $75 </td>
+            </tr>
+
+            <tr class="item last">
+                <td>Domain name (1 year)</td>
+                <td>2</td>
+                <td class="lastitemcolumn"> $10 </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td colspan="2">Discount: $385 </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td colspan="2">Shipping: $385 </td>
+            </tr>
+            <tr class="total">
+                <td></td>
+
+                <td colspan="2">Grand Total: $385 </td>
+            </tr>
+        </table>
+    </div>
+</body>
+
+
+<script>
+
+    const printinvoice = () => {
+        window.print();
+    };
+
+</script>
+</html>

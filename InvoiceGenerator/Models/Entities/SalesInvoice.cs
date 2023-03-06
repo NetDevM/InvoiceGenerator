@@ -1,5 +1,6 @@
 ﻿using InvoiceGenerator.Models.Entities;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -35,12 +36,15 @@ namespace InvoiceGenerator.Models
         [Required]
         public float GrandTotal { get; set; }
 
+        
         public List<SalesProductLineItems>? SalesProductLineItems { get; set; }
 
         #region For View
+        [JsonIgnore]
         [NotMapped]
         public List<SelectListItem>? Products { get; set; }
 
+        [JsonIgnore]
         [NotMapped]
         public List<SelectListItem>? Customers { get; set; } 
         #endregion

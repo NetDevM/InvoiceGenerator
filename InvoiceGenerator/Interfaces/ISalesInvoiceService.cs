@@ -6,9 +6,9 @@ namespace InvoiceGenerator.Interfaces
     {
         Task<bool> AddInvoice(SalesInvoice invoice);
         Task<bool> UpdateInvoice(SalesInvoice invoice);
-        Task<bool> DeleteInvoice(string invoiceid);
+        Task<bool> DeleteInvoice(int invoiceid);
         Task<List<SalesInvoice>> SalesInvoices();
-        Task<Customer> GetSalesInvoiceById(string invoiceid);
+        Task<SalesInvoice> GetSalesInvoiceById(int invoiceid);
 
     }
 }
