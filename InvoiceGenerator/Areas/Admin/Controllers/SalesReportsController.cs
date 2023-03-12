@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using InvoiceGenerator.Interfaces;
+using InvoiceGenerator.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InvoiceGenerator.Areas.Admin.Controllers
@@ -7,9 +9,49 @@ namespace InvoiceGenerator.Areas.Admin.Controllers
     [Area("Admin")]
     public class SalesReportsController : Controller
     {
-        public IActionResult Index()
+
+        private readonly IStoreSettingService _storeSettingService;
+        private readonly ISalesReportService _salesReportService;
+
+        public SalesReportsController(IStoreSettingService storeSettingService,
+            ISalesReportService salesReportService)
         {
-            return View();
+            _storeSettingService = storeSettingService;
+            _salesReportService = salesReportService;
         }
+
+        /// <summary>
+        /// show all reports page
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> Reports()
+        {
+            var storeSettings = await _storeSettingService.GetStoreSettings();
+
+            ReportsViewModel reportsViewModel = new ReportsViewModel()
+            {
+                SalesInvoice = new List<SalesInvoice>(),
+                CurrencyFormat = storeSettings.Currency
+            };
+
+            return View(reportsViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Reports(DateTime fromdate, DateTime todate)
+        {
+            var storeSettings = await _storeSettingService.GetStoreSettings();
+
+            ReportsViewModel reportsViewModel = new ReportsViewModel()
+            {
+                CurrencyFormat = storeSettings.Currency
+            };
+
+            reportsViewModel.SalesInvoice = await _salesReportService.GetSalesInvoiceByDateRange(fromdate, todate);
+
+            return View(reportsViewModel);
+        }
+
     }
 }

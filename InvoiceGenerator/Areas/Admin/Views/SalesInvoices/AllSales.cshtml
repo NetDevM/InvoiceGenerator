@@ -56,7 +56,7 @@
                                         <button type="submit" class="btn"><i class="zmdi zmdi-delete zmdi-hc " aria-hidden="true" title="Delete"></i></button>
                                     </form>
                                     <a style="float:right;" asp-action="EditSalesInvoice" asp-controller="SalesInvoices" title="Edit" asp-route-salesinvoiceid="@sale.SalesInvoiceId" class="btn"><i class="zmdi zmdi-edit zmdi-hc " aria-hidden="true"></i></a>
-                                    <a type="button" class="btn" target="_blank" title="Print" asp-action="GenerateInvoice" asp-controller="SalesInvoices"><i class="zmdi zmdi-print" aria-hidden="true"></i></a>
+                                    <a type="button" class="btn" target="_blank" title="Print" asp-action="GenerateInvoice" asp-route-salesinvoiceid="@sale.SalesInvoiceId" asp-controller="SalesInvoices"><i class="zmdi zmdi-print" aria-hidden="true"></i></a>
 
                                 </td>
                             </tr>

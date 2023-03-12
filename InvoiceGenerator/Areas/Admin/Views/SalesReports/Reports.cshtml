@@ -1,0 +1,121 @@
+﻿@model ReportsViewModel
+@{
+    ViewData["Title"] = "Sales Report";
+    float grandtotal = 0;
+}
+
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <div id="notificationbar" style="display:none;">
+                </div>
+                <form class="row" method="post" asp-action="Reports" asp-controller="SalesReports">
+
+                    <div class="form-group col-lg-3 col-xl-3 mr-2">
+                        <label for="inputNormal">From</label>
+                        <input type="date" asp-for="FromDate" class="form-control" />
+                    </div> <!-- end of form-group -->
+                    <div class="form-group col-lg-3 col-xl-3 mr-2">
+                        <label for="inputNormal">To</label>
+                        <input type="date" asp-for="ToDate" class="form-control" />
+                    </div> <!-- end of form-group -->
+
+                    <div class="form-group col-lg-2 col-xl-2 mr-2 mt-5">
+                        <br />
+                        <button class="form-control btn btn-primary" type="submit" id="btnsearchreport">
+                            <i class="zmdi zmdi-search zmdi-hc-2x mr-1 icon" aria-hidden="true"></i>
+                            Generate
+                        </button>
+                    </div> <!-- end of form-group -->
+                </form> <!-- end of row -->
+                @if (Model?.SalesInvoice?.Count > 0)
+                {
+                    <div class="col-lg-9 col-xl-9">
+                        <div class="cart-container">
+
+                            <div class="cart-head">
+                                <div class="row">
+                                    <div class="form-group col-lg-3 col-xl-3 mr-2">
+                                        <br />
+                                        <button class="form-control btn btn-secondary border-0" style="border-bottom:none;" type="button" id="generateexcel" onclick="ExportToExcel('xlsx')">
+                                            Export Excel
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-borderless table-hover table-striped" id="salesreporttable">
+                                        <thead>
+                                            <tr>
+
+                                                <th scope="col">Code</th>
+                                                <th scope="col">Invoiced Date</th>
+                                                <th scope="col">Payment Method</th>
+                                                <th scope="col">Payment Status</th>
+                                                <th scope="col">Discount (%)</th>
+                                                <th scope="col">Shipping</th>
+                                                <th scope="col">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            @foreach (var item in Model.SalesInvoice)
+                                            {
+                                                <tr>
+                                                    <td>@item.InvoiceCode</td>
+                                                    <td>@item.InvoicedOn.ToShortDateString()</td>
+                                                    <td>@item.PaymentMethod</td>
+                                                    <td>
+                                                        @if (item.PaymentStatus == PaymentStatusConstants.FullPayment)
+                                                        {
+                                                            <span class="badge badge-success">Paid</span>
+                                                        }
+                                                        @if (item.PaymentStatus == PaymentStatusConstants.PartialPayment)
+                                                        {
+                                                            <span class="badge badge-secondary">Partial</span>
+                                                        }
+                                                        @if (item.PaymentStatus == PaymentStatusConstants.Due)
+                                                        {
+                                                            <span class="badge badge-danger">Due</span>
+                                                        }
+                                                    </td>
+                                                    <td>@item.DiscountPercentage </td>
+                                                    <td>@item.Shipping</td>
+                                                    <td>@item.GrandTotal</td>
+                                                </tr>
+
+                                                grandtotal += item.GrandTotal;
+                                            }
+                                            <tr>
+                                                <td colspan="6"><b> Grand Total</b></td>
+                                                <td colspan="6">@Model.CurrencyFormat @grandtotal</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <br />
+                                <br />
+                            </div>
+
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <span class="badge badge-secondary">No Sales Data Found</span>
+                }
+
+            </div> <!-- end of card-body -->
+        </div> <!-- end of card -->
+    </div> <!-- end of col -->
+</div> <!-- end of row -->
+
+<script>
+    function ExportToExcel(type, fn, dl) {
+        var elt = document.getElementById('salesreporttable');
+        var wb = XLSX.utils.table_to_book(elt, { sheet: "Report" });
+        return dl ?
+            XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }) :
+            XLSX.writeFile(wb, fn || ('SalesReport.' + (type || 'xlsx')));
+    }
+</script>

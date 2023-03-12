@@ -8,18 +8,20 @@ using Newtonsoft.Json;
 
 namespace InvoiceGenerator.Areas.Admin.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Area("Admin")]
     public class SalesInvoicesController : Controller
     {
         private readonly IProductService _productService;
         private readonly ICustomerService _customerService;
         private readonly ISalesInvoiceService _salesinvoiceservice;
-        public SalesInvoicesController(IProductService productService, ICustomerService customerService, ISalesInvoiceService salesinvoiceservice)
+        private readonly IStoreSettingService _storesettingservice;
+        public SalesInvoicesController(IProductService productService, ICustomerService customerService, ISalesInvoiceService salesinvoiceservice, IStoreSettingService storesettingservice)
         {
             _productService = productService;
             _customerService = customerService;
             _salesinvoiceservice = salesinvoiceservice;
+            _storesettingservice = storesettingservice;
         }
 
         /// <summary>
@@ -168,8 +170,21 @@ namespace InvoiceGenerator.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> GenerateInvoice(int salesinvoiceid)
         {
-            var salesinvoice = await _salesinvoiceservice.GetSalesInvoiceById(salesinvoiceid);
-            return View(salesinvoice);
+            if (salesinvoiceid < 0)
+            {
+                TempData[MyAlerts.ERROR] = "Invalid SalesInvoiceId!";
+                return View("AllSales");
+            }
+
+            InvoiceViewModel invoicevm = new();
+
+            invoicevm.SalesInvoice = await _salesinvoiceservice.GetSalesInvoiceById(salesinvoiceid);
+            invoicevm.StoreSettings = await _storesettingservice.GetStoreSettings();
+            invoicevm.Customer = await _customerService.GetCustomerById(invoicevm.SalesInvoice.CustomerId);
+
+
+
+            return View(invoicevm);
         }
 
 

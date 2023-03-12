@@ -1,4 +1,4 @@
-﻿@model SalesInvoice
+﻿@model InvoiceViewModel
 @{
     Layout = null;
 }
@@ -14,7 +14,7 @@
             max-width: 800px;
             margin: auto;
             padding: 30px;
-            border: 1px solid #eee; 
+            border: 1px solid #eee;
             font-size: 16px;
             line-height: 24px;
             font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
@@ -140,12 +140,11 @@ margin-left: 45%;
                     <table>
                         <tr>
                             <td class="title">
-                                <img src="https://img.freepik.com/free-vector/minimal-yellow-invoice-template-vector-design_1017-12070.jpg?w=740&t=st=1678110140~exp=1678110740~hmac=ad77ba455c2f6bfdf5b9a0fe1d074df815d8208da3f6153c9248b443d64d890f" style="width: 100%; max-width: 300px" />
+                                <img src="@Model.StoreSettings.ImageUrl" style="width: 80px;" />
                             </td>
                             <td>
-                                Invoice #: 123<br />
-                                Created: January 1, 2015<br />
-                                Due: February 1, 2015
+                                Invoice #: @Model.SalesInvoice.InvoiceCode<br />
+                                Created: @Model.SalesInvoice.InvoicedOn.ToShortDateString()<br />
                             </td>
                         </tr>
                     </table>
@@ -157,15 +156,14 @@ margin-left: 45%;
                     <table>
                         <tr>
                             <td>
-                                Sparksuite, Inc.<br />
-                                12345 Sunny Road<br />
-                                Sunnyville, CA 12345
+                                @Model.StoreSettings.StoreName<br />
+                                @Model.StoreSettings.Address<br />
                             </td>
 
                             <td>
-                                Acme Corp.<br />
-                                John Doe<br />
-                                john@example.com
+                                @Model.Customer.Name<br />
+                                @Model.Customer.Address<br />
+                                @Model.Customer.Email
                             </td>
                         </tr>
                     </table>
@@ -174,50 +172,37 @@ margin-left: 45%;
 
             <tr class="heading">
                 <td colspan="2">Payment Method</td>
-                <td>Check #</td>
+                <td>@Model.SalesInvoice.PaymentMethod #</td>
             </tr>
-
-            <tr class="details">
-                <td colspan="2">Check</td>
-
-                <td>1000</td>
+            <tr>
+                <td><br /></td>
             </tr>
-
             <tr class="heading">
                 <td>Item</td>
                 <td>Quantity </td>
                 <td class="lastitemcolumn">Price</td>
             </tr>
 
-            <tr class="item">
-                <td>Website design</td>
-                <td>2</td>
-                <td class="lastitemcolumn">$33300</td>
-            </tr>
-
-            <tr class="item">
-                <td>Hosting (3 months)</td>
-                <td>2</td>
-                <td class="lastitemcolumn"> $75 </td>
-            </tr>
-
-            <tr class="item last">
-                <td>Domain name (1 year)</td>
-                <td>2</td>
-                <td class="lastitemcolumn"> $10 </td>
+            @foreach (var item in Model.SalesInvoice.SalesProductLineItems)
+            {
+                <tr class="item">
+                    <td>@item.ProductName</td>
+                    <td>@item.Quantity</td>
+                    <td class="lastitemcolumn">@Model.StoreSettings.Currency @item.Price </td>
+                </tr>
+            } 
+            <tr>
+                <td></td>
+                <td colspan="2">Discount:  @Model.SalesInvoice.DiscountPercentage% </td>
             </tr>
             <tr>
                 <td></td>
-                <td colspan="2">Discount: $385 </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td colspan="2">Shipping: $385 </td>
+                <td colspan="2">Shipping: @Model.StoreSettings.Currency @Model.SalesInvoice.Shipping </td>
             </tr>
             <tr class="total">
                 <td></td>
 
-                <td colspan="2">Grand Total: $385 </td>
+                <td colspan="2">Grand Total: @Model.StoreSettings.Currency  @Model.SalesInvoice.GrandTotal </td>
             </tr>
         </table>
     </div>
