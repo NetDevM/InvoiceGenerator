@@ -1,0 +1,75 @@
+﻿@model List<SalesInvoice>
+@{
+    ViewData["Title"] = "Sales Invoices";
+}
+
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-body pb-0">
+                <div class="d-flex align-items-left align-items-md-start justify-content-between mb-4">
+                    <h2 class="text-md mb-0 font-weight-bold">All SalesInvoices</h2>
+
+                    @{
+                        await Html.RenderPartialAsync("_AlertPartial");
+                    }
+                    <div class="text-right">
+
+                        <a asp-controller="SalesInvoices" is-active-route asp-action="Sales" class="btn btn-primary">
+                            <i class="zmdi zmdi-plus-circle zmdi-hc-2x mr-1 icon" aria-hidden="true"></i>
+                            Add Sales
+                        </a>
+                    </div>
+                </div> <!-- end of d-flex -->
+
+            </div> <!-- end of card-body -->
+            <div class="table-responsive col-12 col-lg-10 ml-0">
+                <table class="table table-hover mb-0" id="listtable">
+                    <thead>
+                        <tr>
+
+                            <th>Invoice Code</th>
+                            <th>Payment Method</th>
+                            <th>Payment Status</th>
+                            <th>Shipping</th>
+                            <th>Discount(%)</th>
+                            <th>Grand Total</th>
+                            <th>Action</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var sale in Model)
+                        {
+                            <tr>
+
+                                <td>@sale.InvoiceCode</td>
+                                <td>@sale.PaymentMethod</td>
+                                <td>@sale.PaymentStatus</td>
+                                <td>@sale.Shipping</td>
+                                <td>@sale.DiscountPercentage</td>
+                                <td>@sale.GrandTotal</td>
+
+                                <td>
+                                    <form style="float:right;" method="post" asp-route-salesinvoiceid="@sale.SalesInvoiceId" asp-action="DeleteSalesInvoice" asp-controller="SalesInvoices"
+                                          onclick="return confirm('Are you sure you want to delete ?')">
+                                        <button type="submit" class="btn"><i class="zmdi zmdi-delete zmdi-hc " aria-hidden="true" title="Delete"></i></button>
+                                    </form>
+                                    <a style="float:right;" asp-action="EditSalesInvoice" asp-controller="SalesInvoices" title="Edit" asp-route-salesinvoiceid="@sale.SalesInvoiceId" class="btn"><i class="zmdi zmdi-edit zmdi-hc " aria-hidden="true"></i></a>
+                                    <a type="button" class="btn" target="_blank" title="Print" asp-action="GenerateInvoice" asp-route-salesinvoiceid="@sale.SalesInvoiceId" asp-controller="SalesInvoices"><i class="zmdi zmdi-print" aria-hidden="true"></i></a>
+
+                                </td>
+                            </tr>
+                        }
+
+
+                    </tbody>
+                </table>
+                <br />
+            </div> <!-- end of table-responsive -->
+        </div> <!-- end of card -->
+    </div> <!-- end of col -->
+</div> <!-- end of row -->
+@section Scripts {
+    <partial name="~/Views/Shared/_ValidationScriptsPartial.cshtml" />
+}

@@ -1,4 +1,5 @@
 ﻿using InvoiceGenerator.Models;
+using InvoiceGenerator.Models.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +17,7 @@ namespace InvoiceGenerator.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<StoreSettings> StoreSettings { get; set; }
         public DbSet<SalesInvoice> SalesInvoices { get; set; }
+        public DbSet<SalesProductLineItems> SalesProductLineItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -52,6 +54,12 @@ namespace InvoiceGenerator.Data
             });
             #endregion
 
+            //builder.Entity<SalesProductLineItems>()
+            //    .HasKey(k => k.LineItemId);
+
+            //builder.Entity<SalesProductLineItems>()
+            //    .Property(l => l.LineItemId)
+            //    .UseIdentityColumn();
         }
     }
 }

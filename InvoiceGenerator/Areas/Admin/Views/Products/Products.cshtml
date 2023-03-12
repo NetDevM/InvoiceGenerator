@@ -47,9 +47,9 @@
                                 <td>
                                     <form style="float:right;" method="post" asp-route-productid="@product.Id" asp-action="DeleteProduct" asp-controller="Products"
                                       onclick="return confirm('Are you sure you want to delete ?')">
-                                        <button type="submit" class="btn"><i class="zmdi zmdi-delete zmdi-hc " aria-hidden="true"></i></button>
+                                        <button title="Delete" type="submit" class="btn"><i class="zmdi zmdi-delete zmdi-hc " aria-hidden="true"></i></button>
                                     </form>
-                                    <a style="float:right;" asp-action="EditProduct" asp-controller="Products" asp-route-productid="@product.Id" class="btn"><i class="zmdi zmdi-edit zmdi-hc " aria-hidden="true"></i></a>
+                                    <a style="float:right;" title="Edit" asp-action="EditProduct" asp-controller="Products" asp-route-productid="@product.Id" class="btn"><i class="zmdi zmdi-edit zmdi-hc " aria-hidden="true"></i></a>
 
 
                                 </td>

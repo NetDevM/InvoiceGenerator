@@ -1,6 +1,6 @@
 ﻿@model SalesInvoice
 @{
-    ViewData["Title"] = "New Sales";
+    ViewData["Title"] = "Update Sales";
 }
 
 <div class="row">
@@ -10,8 +10,8 @@
                 <div id="notificationbar" style="display:none;">
                 </div>
                 <div class="row">
-
                     <div class="form-group col-lg-4 col-xl-4 mr-2">
+                        <input type="hidden" asp-for="SalesInvoiceId" value="@ViewBag.SalesInvoiceId" />
                         <label for="inputNormal">Customer</label>
                         <select class="form-control" id="ddlcustomers" asp-items="@Model.Customers">
                             <option value="0">select</option>
@@ -136,20 +136,15 @@
                                 <i class="zmdi zmdi-refresh-alt zmdi-hc-2x mr-1 icon" aria-hidden="true"></i>
                                 Calculate
                             </button>
-                            <button type="button" class="btn btn-primary" id="generateinvoice">
+                            <button type="button" class="btn btn-primary" id="updateinvoice">
                                 <i class="zmdi zmdi-cloud-upload zmdi-hc-2x mr-1 icon" aria-hidden="true"></i>
-                                Generate Invoice
+                                Update Invoice
                             </button>
 
                         </div>
                     </div>
                 </div>
-
-
-
-
-
-
+                 
             </div> <!-- end of card-body -->
         </div> <!-- end of card -->
     </div> <!-- end of col -->

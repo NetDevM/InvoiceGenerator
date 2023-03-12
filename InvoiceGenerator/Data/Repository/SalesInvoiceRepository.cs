@@ -1,6 +1,7 @@
 ﻿using InvoiceGenerator.Interfaces;
 using InvoiceGenerator.Models;
-using NuGet.Configuration;
+using Microsoft.EntityFrameworkCore;
+using System.Transactions;
 
 namespace InvoiceGenerator.Data.Repository
 {
@@ -34,24 +35,78 @@ namespace InvoiceGenerator.Data.Repository
                 return false;
         }
 
-        public Task<bool> DeleteInvoice(string invoiceid)
+        /// <summary>
+        /// delete salesinvoice and lineitems
+        /// </summary>
+        /// <param name="salesinvoiceid"></param>
+        /// <returns></returns>
+        public async Task<bool> DeleteInvoice(int salesinvoiceid)
         {
-            throw new NotImplementedException();
+            //get the salesinvoice if exist
+            var foundsalesinvoice = await _context.SalesInvoices.AsNoTracking().FirstOrDefaultAsync(c => c.SalesInvoiceId == salesinvoiceid);
+
+            if (foundsalesinvoice is not null)
+            {
+                _context.Remove(foundsalesinvoice);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+
+            return false;
         }
 
-        public Task<Customer> GetSalesInvoiceById(string invoiceid)
+        public async Task<SalesInvoice> GetSalesInvoiceById(int salesinvoiceid)
         {
-            throw new NotImplementedException();
+            return await _context.SalesInvoices
+                .Include(s => s.SalesProductLineItems)
+                .AsNoTracking().FirstOrDefaultAsync(c => c.SalesInvoiceId == salesinvoiceid);
+
         }
 
-        public Task<List<SalesInvoice>> SalesInvoices()
+        public async Task<List<SalesInvoice>> SalesInvoices()
         {
-            throw new NotImplementedException();
+            return await _context.SalesInvoices.ToListAsync();
         }
 
-        public Task<bool> UpdateInvoice(SalesInvoice invoice)
+        public async Task<bool> UpdateInvoice(SalesInvoice invoice)
         {
-            throw new NotImplementedException();
+            //get the sales if exist
+            var foundsalesinvoice = await _context.SalesInvoices
+                                            .AsNoTracking()
+                                            .FirstOrDefaultAsync(c => c.SalesInvoiceId == invoice.SalesInvoiceId);
+
+            //existing lineitems
+            var existinglineitems = _context.SalesProductLineItems
+                .AsNoTracking()
+                .Where(x => x.SalesInvoiceId == invoice.SalesInvoiceId);
+
+
+            if (foundsalesinvoice is not null)
+            {
+                using var transactionscope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+
+                //remove old salesorder items
+                _context.SalesProductLineItems.RemoveRange(existinglineitems);
+
+                //for update the main parent order item
+
+                _context.Entry(invoice).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+
+
+                //add new sales order items
+                await _context.SalesProductLineItems.AddRangeAsync(invoice.SalesProductLineItems);
+                await _context.SaveChangesAsync();
+
+
+                transactionscope.Complete();
+                transactionscope.Dispose();
+
+
+                return true;
+            }
+
+            return false;
         }
     }
 }

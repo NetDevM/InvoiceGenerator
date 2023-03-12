@@ -10,6 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
+
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -23,6 +25,7 @@ builder.Services.AddTransient<ICustomerService, CustomerRepository>();
 builder.Services.AddTransient<IProductService, ProductRepository>();
 builder.Services.AddTransient<IStoreSettingService, StoreSettingRepository>();
 builder.Services.AddTransient<ISalesInvoiceService, SalesInvoiceRepository>();
+builder.Services.AddTransient<ISalesReportService, SalesReportRepository>();
 #endregion
 
 
