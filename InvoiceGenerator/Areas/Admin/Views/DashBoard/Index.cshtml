@@ -1,4 +1,5 @@
-﻿@{
+﻿@model DashBoardViewModel
+@{
     ViewData["Title"] = "Dashboard";
 }
 <div class="row">
@@ -8,9 +9,10 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex align-items-baseline justify-content-between">
-                            <i class="zmdi zmdi-money zmdi-hc-4x text-success"></i>
+                            <i class="zmdi zmdi-hc-4x text-success">@Model.StoreSettings.Currency</i>
+                            
                             <div>
-                                <h3 class="mb-0 display-2"> 41,726</h3>
+                                <h3 class="mb-0 display-2">@string.Format("{0:N2}", @Model.TotalRevenue) </h3>
                                 <br />
                                 <h2 class="text-md text-secondary">Total Revenue</h2>
                             </div>
@@ -27,7 +29,7 @@
                         <div class="d-flex align-items-baseline justify-content-between">
                             <i class="zmdi zmdi-shopping-cart zmdi-hc-4x text-alert"></i>
                             <div>
-                                <h3 class="mb-0 display-2"> 41,726</h3>
+                                <h3 class="mb-0 display-2">@Model.TotalSales</h3>
                                 <br />
                                 <h2 class="text-md text-secondary">Total Sales</h2>
                             </div>
@@ -43,7 +45,7 @@
                         <div class="d-flex align-items-baseline justify-content-between">
                             <i class="zmdi zmdi-archive zmdi-hc-4x text-warning"></i>
                             <div>
-                                <h3 class="mb-0 display-2"> 41,726</h3>
+                                <h3 class="mb-0 display-2"> @Model.TotalProducts</h3>
                                 <br />
                                 <h2 class="text-md text-secondary">Total Products</h2>
                             </div>
@@ -59,7 +61,7 @@
                         <div class="d-flex align-items-baseline justify-content-between">
                             <i class="zmdi zmdi-account zmdi-hc-4x text-danger"></i>
                             <div>
-                                <h3 class="mb-0 display-2"> 41,726</h3>
+                                <h3 class="mb-0 display-2">@Model.TotalCustomers</h3>
                                 <br />
                                 <h2 class="text-md text-secondary">Total Customer</h2>
                             </div>
@@ -89,66 +91,35 @@
                 <table class="table table-hover mb-0">
                     <thead>
                         <tr>
-                            <th>#</th>
+
                             <th>Invoice Code</th>
-                            <th>Date</th>
-                            <th>Total</th>
-                            <th>Status</th>
-                            <th>Print</th>
+                            <th>Payment Method</th>
+                            <th>Payment Status</th>
+                            <th>Shipping</th>
+                            <th>Discount(%)</th>
+                            <th>Grand Total</th>
+                            <th>Action</th>
 
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>#001AAA</td>
-                            <td>12/02/2023</td>
-                            <td>$300</td>
-                            <td> <span class="badge badge-success">Active</span></td>
-                            <td>
-                                <button type="button" class="btn"><i class="zmdi zmdi-print zmdi-hc-2x " aria-hidden="true"></i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>#001AAA</td>
-                            <td>12/02/2023</td>
-                            <td>$300</td>
-                            <td> <span class="badge badge-danger">Due</span></td>
-                            <td>
-                                <button type="button" class="btn "><i class="zmdi zmdi-print zmdi-hc-2x " aria-hidden="true"></i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>#001AAA</td>
-                            <td>12/02/2023</td>
-                            <td>$300</td>
-                            <td> <span class="badge badge-secondary">Cancelled</span></td>
-                            <td>
-                                <button type="button" class="btn  "><i class="zmdi zmdi-print zmdi-hc-2x " aria-hidden="true"></i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>#001AAA</td>
-                            <td>12/02/2023</td>
-                            <td>$300</td>
-                            <td> <span class="badge badge-success">Active</span></td>
-                            <td>
-                                <button type="button" class="btn "><i class="zmdi zmdi-print zmdi-hc-2x " aria-hidden="true"></i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>#001AAA</td>
-                            <td>12/02/2023</td>
-                            <td>$300</td>
-                            <td> <span class="badge badge-success">Active</span></td>
-                            <td>
-                                <button type="button" class="btn  "><i class="zmdi zmdi-print zmdi-hc-2x " aria-hidden="true"></i></button>
-                            </td>
-                        </tr>
+                        @foreach (var sale in Model?.SalesInvoices)
+                        {
+                            <tr>
+
+                                <td># @sale.InvoiceCode</td>
+                                <td>@sale.PaymentMethod</td>
+                                <td>@sale.PaymentStatus</td>
+                                <td>@sale.Shipping</td>
+                                <td>@sale.DiscountPercentage</td>
+                                <td>@sale.GrandTotal</td>
+
+                                <td>
+                                    <a type="button" class="btn" target="_blank" title="Print" asp-action="GenerateInvoice" asp-route-salesinvoiceid="@sale.SalesInvoiceId" asp-controller="SalesInvoices"><i class="zmdi zmdi-print" aria-hidden="true"></i></a>
+                                </td>
+                            </tr>
+                        }
+
                     </tbody>
                 </table>
             </div> <!-- end of table-responsive -->

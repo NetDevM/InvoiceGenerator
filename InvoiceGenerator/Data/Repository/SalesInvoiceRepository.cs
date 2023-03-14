@@ -55,6 +55,11 @@ namespace InvoiceGenerator.Data.Repository
             return false;
         }
 
+        /// <summary>
+        /// Get salesinvoice by id
+        /// </summary>
+        /// <param name="salesinvoiceid"></param>
+        /// <returns></returns>
         public async Task<SalesInvoice> GetSalesInvoiceById(int salesinvoiceid)
         {
             return await _context.SalesInvoices
@@ -63,11 +68,34 @@ namespace InvoiceGenerator.Data.Repository
 
         }
 
+        /// <summary>
+        /// total sales , total revenue , recent 5 sales
+        /// </summary>
+        /// <returns></returns>
+        public async Task<(int totalsalescount, float totalrevenue, List<SalesInvoice> latestfive)> GetSalesDataForDashboard()
+        {
+            var salesdata = await _context.SalesInvoices.ToListAsync();
+            var totalsalescount = salesdata.Count;
+            var totalrevenue = salesdata.Sum(x => x.GrandTotal);
+            var recentsales = salesdata.OrderByDescending(x => x.InvoicedOn).ToList();
+
+            return (totalsalescount, totalrevenue, recentsales);
+        }
+
+        /// <summary>
+        /// all sales invoices
+        /// </summary>
+        /// <returns></returns>
         public async Task<List<SalesInvoice>> SalesInvoices()
         {
             return await _context.SalesInvoices.ToListAsync();
         }
 
+        /// <summary>
+        /// update salesinvoice
+        /// </summary>
+        /// <param name="invoice"></param>
+        /// <returns></returns>
         public async Task<bool> UpdateInvoice(SalesInvoice invoice)
         {
             //get the sales if exist
@@ -107,6 +135,22 @@ namespace InvoiceGenerator.Data.Repository
             }
 
             return false;
+        }
+
+
+        /// <summary>
+        /// Get last salesinvoice id
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task<int> GetLastSalesInvoiceId()
+        {
+            var lastitem = await _context.SalesInvoices.OrderByDescending(s => s.SalesInvoiceId).FirstOrDefaultAsync();
+
+            if (lastitem != null)
+                return lastitem.SalesInvoiceId+1;
+            else
+                return 0;
         }
     }
 }

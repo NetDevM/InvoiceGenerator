@@ -81,6 +81,15 @@ namespace InvoiceGenerator.Data.Repository
         }
 
         /// <summary>
+        /// total customer count
+        /// </summary>
+        /// <returns></returns>
+        public async Task<int> GetTotalCustomersCount()
+        {
+            return await _context.Customers.CountAsync();
+        }
+
+        /// <summary>
         /// Updating customer for updating customers implemented from Icustomerservice
         /// </summary>
         /// <param name="customer"></param>

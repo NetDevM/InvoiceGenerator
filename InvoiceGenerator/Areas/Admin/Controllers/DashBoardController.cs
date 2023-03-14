@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using InvoiceGenerator.Interfaces;
+using InvoiceGenerator.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InvoiceGenerator.Areas.Admin.Controllers
@@ -7,9 +9,38 @@ namespace InvoiceGenerator.Areas.Admin.Controllers
     [Area("Admin")]
     public class DashBoardController : Controller
     {
-        public IActionResult Index()
+
+        private readonly ISalesInvoiceService _salesinvoiceservice;
+        private readonly IProductService _productService;
+        private readonly ICustomerService _customerService;
+        private readonly IStoreSettingService _storeSettingService;
+
+        public DashBoardController(ISalesInvoiceService salesInvoiceService, IProductService productService, ICustomerService customerService,IStoreSettingService storeSettingService)
         {
-            return View();
+            _salesinvoiceservice = salesInvoiceService;
+            _productService = productService;
+            _customerService = customerService;
+            _storeSettingService= storeSettingService;
+
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Index()
+        {
+            DashBoardViewModel dashboardvm = new DashBoardViewModel();
+
+
+            (int totalsalescount, float totalrevenue, List<SalesInvoice> latestfive) = await _salesinvoiceservice.GetSalesDataForDashboard();
+            dashboardvm.SalesInvoices = latestfive;
+            dashboardvm.TotalRevenue = totalrevenue;
+            dashboardvm.TotalSales = totalsalescount;
+
+            dashboardvm.TotalCustomers = await _customerService.GetTotalCustomersCount();
+            dashboardvm.TotalProducts = await _productService.GetTotalProductsCount();
+
+            dashboardvm.StoreSettings = await _storeSettingService.GetStoreSettings();
+
+            return View(dashboardvm);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using InvoiceGenerator.Interfaces;
+﻿using InvoiceGenerator.Helper;
+using InvoiceGenerator.Interfaces;
 using InvoiceGenerator.Models;
 using InvoiceGenerator.Models.Notification;
 using Microsoft.AspNetCore.Authorization;
@@ -69,12 +70,16 @@ namespace InvoiceGenerator.Areas.Admin.Controllers
                 CustomerId = salesorder.Orders.CustomerId,
                 Tax = salesorder.Orders.Tax,
                 DiscountPercentage = salesorder.Orders.DiscountPercentage,
-                SalesProductLineItems = salesorder.LineItems,
-                InvoiceCode = Guid.NewGuid().ToString(),
+                SalesProductLineItems = salesorder.LineItems, 
                 InvoicedOn = DateTime.Now,
                 Notes = salesorder.Orders.Notes
             };
 
+            //get the last salesitem
+            var lastsalesinvoiceid=await _salesinvoiceservice.GetLastSalesInvoiceId();
+
+            //generate invoice code
+            salesorderinvoice.InvoiceCode = InvoiceCodeFormaterHelper.GetInvoiceCode(lastsalesinvoiceid); 
 
             bool status = await _salesinvoiceservice.AddInvoice(salesorderinvoice);
 

@@ -97,7 +97,14 @@ namespace InvoiceGenerator.Data.Repository
 
             return false;
         }
-   
-    
+
+        /// <summary>
+        /// total products
+        /// </summary>
+        /// <returns></returns>
+        public async Task<int> GetTotalProductsCount()
+        {
+            return await _context.Products.CountAsync();
+        }
     }
 }
