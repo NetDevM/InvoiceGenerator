@@ -3,7 +3,9 @@ using InvoiceGenerator.Migrations;
 using InvoiceGenerator.Models;
 using InvoiceGenerator.Models.Notification;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace InvoiceGenerator.Areas.Admin.Controllers
 {
@@ -13,11 +15,13 @@ namespace InvoiceGenerator.Areas.Admin.Controllers
     {
         private readonly IStoreSettingService _storeSettingService;
         private IWebHostEnvironment _webHostEnvironment;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public SettingsController(IStoreSettingService settingService, IWebHostEnvironment env)
+        public SettingsController(IStoreSettingService settingService, IWebHostEnvironment env, UserManager<IdentityUser> userManager)
         {
             _storeSettingService = settingService;
             _webHostEnvironment = env;
+            _userManager = userManager;
         }
 
         [HttpGet]
@@ -98,5 +102,34 @@ namespace InvoiceGenerator.Areas.Admin.Controllers
             return View(storesettings);
 
         }
+
+
+        [HttpGet]
+        public IActionResult ResetPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ResetPassword(PasswordResetModel passwordResetModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("ResetPassword");
+            }
+           
+            var email = User.FindFirstValue(ClaimTypes.Email);
+            var user = await _userManager.FindByEmailAsync(email);
+             
+
+            var result = await _userManager.ChangePasswordAsync(user, passwordResetModel?.CurrentPassword, passwordResetModel?.Password);
+            if (result.Succeeded)
+                TempData[MyAlerts.SUCCESS] = "Password Reset successfully!, Please Logout and Login";
+            else
+                TempData[MyAlerts.ERROR] = result.Errors.FirstOrDefault().Description;
+
+            return View();
+        }
+
     }
 }
