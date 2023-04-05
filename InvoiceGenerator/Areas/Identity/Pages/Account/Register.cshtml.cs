@@ -105,8 +105,8 @@ namespace InvoiceGenerator.Areas.Identity.Pages.Account
             return RedirectToPage("Login");
 
             #region Not allowed to register
-            ReturnUrl = returnUrl;
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList(); 
+            //ReturnUrl = returnUrl;
+            //ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList(); 
             #endregion
         }
 

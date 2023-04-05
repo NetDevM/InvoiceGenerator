@@ -9,10 +9,19 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex align-items-baseline justify-content-between">
-                            <i class="zmdi zmdi-hc-4x text-success">@Model.StoreSettings.Currency</i>
-                            
+                            <i class="zmdi zmdi-hc-4x text-success">
+                                @if(Model.StoreSettings is null)
+                                {
+                                    <text>$</text>
+                                }
+                                else
+                                {
+                                    <text>@Model.StoreSettings.Currency</text>
+                                }
+                            </i>
+
                             <div>
-                                <h3 class="mb-0 display-2">@string.Format("{0:N2}", @Model.TotalRevenue) </h3>
+                                <h3 class="mb-0 display-2">@string.Format("{0:N2}", @Model?.TotalRevenue) </h3>
                                 <br />
                                 <h2 class="text-md text-secondary">Total Revenue</h2>
                             </div>
@@ -29,7 +38,7 @@
                         <div class="d-flex align-items-baseline justify-content-between">
                             <i class="zmdi zmdi-shopping-cart zmdi-hc-4x text-alert"></i>
                             <div>
-                                <h3 class="mb-0 display-2">@Model.TotalSales</h3>
+                                <h3 class="mb-0 display-2">@Model?.TotalSales</h3>
                                 <br />
                                 <h2 class="text-md text-secondary">Total Sales</h2>
                             </div>
@@ -45,7 +54,7 @@
                         <div class="d-flex align-items-baseline justify-content-between">
                             <i class="zmdi zmdi-archive zmdi-hc-4x text-warning"></i>
                             <div>
-                                <h3 class="mb-0 display-2"> @Model.TotalProducts</h3>
+                                <h3 class="mb-0 display-2"> @Model?.TotalProducts</h3>
                                 <br />
                                 <h2 class="text-md text-secondary">Total Products</h2>
                             </div>
@@ -61,7 +70,7 @@
                         <div class="d-flex align-items-baseline justify-content-between">
                             <i class="zmdi zmdi-account zmdi-hc-4x text-danger"></i>
                             <div>
-                                <h3 class="mb-0 display-2">@Model.TotalCustomers</h3>
+                                <h3 class="mb-0 display-2">@Model?.TotalCustomers</h3>
                                 <br />
                                 <h2 class="text-md text-secondary">Total Customer</h2>
                             </div>

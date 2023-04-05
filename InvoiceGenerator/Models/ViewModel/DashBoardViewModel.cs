@@ -4,14 +4,14 @@
     {
         public List<SalesInvoice>? SalesInvoices { get; set; }
 
-        public float TotalRevenue { get; set; }
+        public float TotalRevenue { get; set; } = 0;
 
-        public float TotalSales { get; set; }
+        public float TotalSales { get; set; } = 0;
 
-        public int TotalProducts { get; set; }
+        public int TotalProducts { get; set; } = 0;
 
-        public int TotalCustomers { get; set; }
+        public int TotalCustomers { get; set; } = 0;
 
-        public StoreSettings StoreSettings { get; set; }
+        public StoreSettings? StoreSettings { get; set; }
     }
 }
