@@ -26,6 +26,7 @@ builder.Services.AddTransient<IProductService, ProductRepository>();
 builder.Services.AddTransient<IStoreSettingService, StoreSettingRepository>();
 builder.Services.AddTransient<ISalesInvoiceService, SalesInvoiceRepository>();
 builder.Services.AddTransient<ISalesReportService, SalesReportRepository>();
+builder.Services.AddTransient<IPaymentService, PaymentRepository>();
 #endregion
 
 

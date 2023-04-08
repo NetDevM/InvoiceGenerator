@@ -17,7 +17,7 @@ namespace InvoiceGenerator.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("Index", "Dashboard", new { Area = "Admin" });
         }
 
         public IActionResult Privacy()

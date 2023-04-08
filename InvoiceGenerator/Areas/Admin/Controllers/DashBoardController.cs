@@ -37,7 +37,6 @@ namespace InvoiceGenerator.Areas.Admin.Controllers
 
             dashboardvm.TotalCustomers = await _customerService.GetTotalCustomersCount();
             dashboardvm.TotalProducts = await _productService.GetTotalProductsCount();
-
             dashboardvm.StoreSettings = await _storeSettingService.GetStoreSettings();
 
             return View(dashboardvm);
