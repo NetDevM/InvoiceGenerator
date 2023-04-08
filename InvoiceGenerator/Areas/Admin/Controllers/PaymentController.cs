@@ -1,5 +1,4 @@
 ﻿using InvoiceGenerator.Interfaces;
-using InvoiceGenerator.Migrations;
 using InvoiceGenerator.Models;
 using InvoiceGenerator.Models.Notification;
 using InvoiceGenerator.Models.ViewModel;
@@ -206,7 +205,7 @@ namespace InvoiceGenerator.Areas.Admin.Controllers
         /// <param name="customerid"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<JsonResult> GetSalesInvoiceByCustomerId(int customerid,int selectedinvoice)
+        public async Task<JsonResult> GetSalesInvoiceByCustomersId(int customerid,int selectedinvoice)
         {
             var allsalesinvoiceforcustomerid = await _salesInvoiceService.GetSalesInvoiceByCustomerId(customerid);
             var selecttowdata = new SelectTwoData()
