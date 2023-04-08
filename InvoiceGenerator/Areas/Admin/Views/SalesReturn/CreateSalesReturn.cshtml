@@ -1,0 +1,76 @@
+﻿@model PaymentViewModel
+
+@{
+    ViewData["Title"] = "Add SalesReturn";
+}
+<div class="row">
+    <div class="col-12 col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="mb-4 text-md font-weight-bold">Add SalesReturn</h2>
+                @{
+                    await Html.RenderPartialAsync("_AlertPartial");
+                }
+                <form class="row" method="post" asp-action="CreateSalesReturn" asp-controller="SalesReturn">
+                    <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                    <div class="col-12 col-lg-10 pr-xl-3">
+                        <input type="hidden" asp-for="@Model.SalesReturn.InvoiceCode"  />
+                        <div class="form-group">
+                            <label>Customer</label>
+                            <select class="form-control" id="ddlpayblecustomersalesreturn" asp-items="@Model.Customers" asp-for="@Model.SelectedCustomerId">
+                                <option value="0">select</option>
+                            </select>
+
+                        </div> <!-- end of form-group -->
+
+                        <div class="form-group">
+                            <label>Sales Invoice Number</label>
+                            <select class="form-control" id="ddlsalesinvoicesalesreturn" asp-for="@Model.SelectedSalesInvoiceId">
+                                <option value="0">select</option>
+                            </select>
+
+                        </div> <!-- end of form-group -->
+
+                        <div class="form-group">
+                            <label>Refundable Amount</label>
+                            <input asp-for="@Model.SalesReturn.RefundableAmount" type="number" class="form-control" readonly="@(true)">
+                            <span asp-validation-for="@Model.SalesReturn.RefundableAmount" class="text-danger"></span>
+                        </div> <!-- end of form-group -->
+                         
+                        <div class="form-group">
+                            <label>Reason</label>
+                            <textarea asp-for="@Model.SalesReturn.Reason" class="form-control"></textarea>
+                        </div> <!-- end of form-group -->
+                        <!-- end of d-flex -->
+                        <div class="form-group">
+                            <div class="text-right"><button type="submit" class="btn btn-primary">Submit</button></div>
+                        </div>
+                    </div> <!-- end of col -->
+
+                </form> <!-- end of row -->
+                <div class="cart-head">
+                    <div class="table-responsive">
+                        <table class="table table-borderless table-hover table-striped" id="salesreturnproductlineitems">
+                            <thead>
+                                <tr>
+
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Unit</th>
+                                    <th scope="col">Qty</th>
+                                    <th scope="col">Price</th> 
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <br />
+                    <br />
+                </div>
+            </div> <!-- end of card-body -->
+        </div> <!-- end of card -->
+    </div> <!-- end of col -->
+</div> <!-- end of row -->
+@section Scripts {
+    <partial name="~/Views/Shared/_ValidationScriptsPartial.cshtml" />
+}

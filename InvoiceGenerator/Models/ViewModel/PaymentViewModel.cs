@@ -6,6 +6,8 @@ namespace InvoiceGenerator.Models
     {
         public Payment? Payment { get; set; }
 
+        public SalesReturn? SalesReturn { get; set; }
+
         public int SelectedPaymentMode { get; set; }
 
         public List<SelectListItem>? Customers { get; set; }

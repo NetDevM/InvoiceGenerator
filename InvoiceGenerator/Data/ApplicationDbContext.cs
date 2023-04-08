@@ -19,6 +19,7 @@ namespace InvoiceGenerator.Data
         public DbSet<SalesInvoice> SalesInvoices { get; set; }
         public DbSet<SalesProductLineItems> SalesProductLineItems { get; set; }
         public DbSet<Payment> Payments { get; set; }
+        public DbSet<SalesReturn> SalesReturns { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

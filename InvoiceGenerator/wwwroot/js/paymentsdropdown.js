@@ -82,7 +82,7 @@ $(document).ready(function () {
 
     //this means in a edit mode
     var SelectedSalesInvoiceId = $("#SelectedSalesInvoiceId").val();    
-    console.log(SelectedSalesInvoiceId);
+    
     if (SelectedSalesInvoiceId) {
 
         var selectedcustomerid = $("#SelectedCustomerId").val();
@@ -97,7 +97,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: 'GET',
-            url: '/Admin/Payment/GetSalesInvoiceByCustomerId?customerid=' + customerid + '&selectedinvoice=' + selectedinvoice,
+            url: '/Admin/Payment/GetSalesInvoiceByCustomersId?customerid=' + customerid + '&selectedinvoice=' + selectedinvoice,
             contentType: 'json',
             success: function (datas) {
 
