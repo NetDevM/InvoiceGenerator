@@ -1,4 +1,5 @@
 ﻿using InvoiceGenerator.Interfaces;
+using InvoiceGenerator.Migrations;
 using InvoiceGenerator.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Transactions;
@@ -74,7 +75,7 @@ namespace InvoiceGenerator.Data.Repository
         /// <returns></returns>
         public async Task<(int totalsalescount, float totalrevenue, List<SalesInvoice> latestfive)> GetSalesDataForDashboard()
         {
-            var salesdata = await _context.SalesInvoices.ToListAsync();
+            var salesdata = await _context.SalesInvoices.Where(x => x.IsSalesReturned == false).ToListAsync();
             var totalsalescount = salesdata.Count;
             var totalrevenue = salesdata.Sum(x => x.GrandTotal);
             var recentsales = salesdata.OrderByDescending(x => x.InvoicedOn).ToList();
@@ -88,7 +89,7 @@ namespace InvoiceGenerator.Data.Repository
         /// <returns></returns>
         public async Task<List<SalesInvoice>> SalesInvoices()
         {
-            return await _context.SalesInvoices.ToListAsync();
+            return await _context.SalesInvoices.Where(x=>x.IsSalesReturned==false).ToListAsync();
         }
 
         /// <summary>
@@ -151,6 +152,32 @@ namespace InvoiceGenerator.Data.Repository
                 return lastitem.SalesInvoiceId+1;
             else
                 return 0;
+        }
+
+        /// <summary>
+        /// populate by customer id
+        /// </summary>
+        /// <param name="customerid"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task<List<SalesInvoice>> GetSalesInvoiceByCustomerId(int customerid)
+        {
+            return await _context.SalesInvoices 
+              .AsNoTracking().Where(c => c.CustomerId == customerid).ToListAsync();
+        }
+
+        /// <summary>
+        /// get total by salesinvoiceid
+        /// </summary>
+        /// <param name="salesinvoiceid"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task<float> GetGrandTotalBySalesInvoiceId(int salesinvoiceid)
+        {
+            var salesinvoice=await _context.SalesInvoices
+              .AsNoTracking().FirstOrDefaultAsync(x => x.SalesInvoiceId == salesinvoiceid);
+
+            return salesinvoice.GrandTotal;
         }
     }
 }

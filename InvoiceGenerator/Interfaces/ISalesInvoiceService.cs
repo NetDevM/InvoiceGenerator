@@ -11,6 +11,8 @@ namespace InvoiceGenerator.Interfaces
         Task<List<SalesInvoice>> SalesInvoices();
         Task<SalesInvoice> GetSalesInvoiceById(int invoiceid);
         Task<int> GetLastSalesInvoiceId();
+        Task<List<SalesInvoice>> GetSalesInvoiceByCustomerId(int customerid);
+        Task<float> GetGrandTotalBySalesInvoiceId(int salesinvoiceid);
 
     }
 }

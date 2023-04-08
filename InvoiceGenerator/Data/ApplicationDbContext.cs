@@ -18,6 +18,7 @@ namespace InvoiceGenerator.Data
         public DbSet<StoreSettings> StoreSettings { get; set; }
         public DbSet<SalesInvoice> SalesInvoices { get; set; }
         public DbSet<SalesProductLineItems> SalesProductLineItems { get; set; }
+        public DbSet<Payment> Payments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -53,13 +54,7 @@ namespace InvoiceGenerator.Data
                 entity.ToTable("UserTokens");
             });
             #endregion
-
-            //builder.Entity<SalesProductLineItems>()
-            //    .HasKey(k => k.LineItemId);
-
-            //builder.Entity<SalesProductLineItems>()
-            //    .Property(l => l.LineItemId)
-            //    .UseIdentityColumn();
+ 
         }
     }
 }

@@ -1,0 +1,73 @@
+﻿@model List<Payment>
+@{
+    ViewData["Title"] = "Payments";
+}
+
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-body pb-0">
+                <div class="d-flex align-items-left align-items-md-start justify-content-between mb-4">
+                    <h2 class="text-md mb-0 font-weight-bold">All Payments</h2>
+
+                    @{
+                        await Html.RenderPartialAsync("_AlertPartial");
+                    }
+                    <div class="text-right">
+
+                        <a asp-controller="Payment" is-active-route asp-action="CreatePayment" class="btn btn-primary">
+                            <i class="zmdi zmdi-plus-circle zmdi-hc-2x mr-1 icon" aria-hidden="true"></i>
+                            Add Payment
+                        </a>
+                    </div>
+                </div> <!-- end of d-flex -->
+
+            </div> <!-- end of card-body -->
+            <div class="table-responsive col-12 col-lg-10 ml-0">
+                <table class="table table-hover mb-0" id="listtable">
+                    <thead>
+                        <tr>
+
+                            <th>Payment Id</th>
+                            <th>Sales Invoice</th>
+                            <th>Due Amount</th>
+                            <th>Received</th>
+                             
+                            <th>Payment Date</th>
+                            <th>Action</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var payment in Model)
+                        {
+                            <tr>
+
+                                <td>@payment.Id</td>
+                                <td>@payment.SalesInvoiceId</td>
+                                <td>@payment.DueAmount</td>
+                                <td>@payment.ReceivedAmount</td>
+                                
+                                <td>@payment.PaymentDate.ToShortDateString()</td>
+                                
+                                <td>
+                                    <form style="float:right;" method="post" asp-route-paymentid="@payment.Id" asp-action="DeletePayment" asp-controller="Payment"
+                                      onclick="return confirm('Are you sure you want to delete ?')">
+                                        <button title="Delete" type="submit" class="btn"><i class="zmdi zmdi-delete zmdi-hc " aria-hidden="true"></i></button>
+                                    </form>
+                                    <a style="float:right;" title="Edit" asp-action="EditPayment" asp-controller="Payment" asp-route-paymentid="@payment.Id" class="btn"><i class="zmdi zmdi-edit zmdi-hc " aria-hidden="true"></i></a>
+
+
+                                </td>
+                            </tr>
+                        } 
+                    </tbody>
+                </table>
+                <br />
+            </div> <!-- end of table-responsive -->
+        </div> <!-- end of card -->
+    </div> <!-- end of col -->
+</div> <!-- end of row -->
+@section Scripts {
+    <partial name="~/Views/Shared/_ValidationScriptsPartial.cshtml" />
+}

@@ -36,7 +36,8 @@ namespace InvoiceGenerator.Models
         [Required]
         public float GrandTotal { get; set; }
 
-        
+        public bool IsSalesReturned { get; set; }
+
         public List<SalesProductLineItems>? SalesProductLineItems { get; set; }
 
         #region For View

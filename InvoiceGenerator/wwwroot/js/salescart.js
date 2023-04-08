@@ -74,32 +74,7 @@ $(document).ready(function () {
         }
 
     });
-    //$("#ddlproduct").on('change', function (e) {
-    //    item.productid = e.target.value;
-    //    item.productname = e.target.selectedOptions[0].text;
-
-
-    //    //make ajax request to get unit price of the selected product
-    //    if (item.productid != 0) {
-    //        $.ajax({
-    //            type: 'GET',
-    //            url: '/Admin/SalesInvoices/GetProductByid?productid=' + item.productid,
-    //            contentType: 'json',
-    //            success: function (result) {
-
-    //                //set the unit price of the product
-    //                item.unitprice = result.price;
-
-    //                //populate textbox
-    //                $("#unitprice").val(item.unitprice);
-    //            }
-    //        });
-    //    }
-    //});
-
-    //$("#ddlcustomers").on('change', function (e) {
-    //    orders.customerid = e.target.value;
-    //});
+ 
 
     $('#ddlcustomers').select2();
     $('#ddlcustomers').on('select2:select', function (e) {
