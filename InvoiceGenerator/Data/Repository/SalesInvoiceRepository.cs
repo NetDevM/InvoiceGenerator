@@ -75,7 +75,7 @@ namespace InvoiceGenerator.Data.Repository
         /// <returns></returns>
         public async Task<(int totalsalescount, float totalrevenue, List<SalesInvoice> latestfive)> GetSalesDataForDashboard()
         {
-            var salesdata = await _context.SalesInvoices.Where(x => x.IsSalesReturned == false).ToListAsync();
+            var salesdata = await _context.SalesInvoices.ToListAsync();
             var totalsalescount = salesdata.Count;
             var totalrevenue = salesdata.Sum(x => x.GrandTotal);
             var recentsales = salesdata.OrderByDescending(x => x.InvoicedOn).ToList();
@@ -89,7 +89,7 @@ namespace InvoiceGenerator.Data.Repository
         /// <returns></returns>
         public async Task<List<SalesInvoice>> SalesInvoices()
         {
-            return await _context.SalesInvoices.Where(x=>x.IsSalesReturned==false).ToListAsync();
+            return await _context.SalesInvoices.ToListAsync();
         }
 
         /// <summary>
@@ -178,6 +178,32 @@ namespace InvoiceGenerator.Data.Repository
               .AsNoTracking().FirstOrDefaultAsync(x => x.SalesInvoiceId == salesinvoiceid);
 
             return salesinvoice.GrandTotal;
+        }
+
+
+        /// <summary>
+        /// mark IsSalesReturned field true if salesreturn created
+        /// mark IsSalesReturned field false if salesreturn deleted
+        /// </summary>
+        /// <param name="salesinvoiceid"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public async Task<bool> UpdateSalesReturnedForSalesInvoiceByID(int salesinvoiceid,bool value)
+        {
+            //get the salesinvoice if exist
+            var foundsalesinvoice = await _context.SalesInvoices.AsNoTracking().FirstOrDefaultAsync(c => c.SalesInvoiceId == salesinvoiceid);
+
+            if (foundsalesinvoice is not null)
+            {
+                
+                foundsalesinvoice.IsSalesReturned = value;
+
+                _context.Entry(foundsalesinvoice).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+                return true;
+            }
+
+            return false;
         }
     }
 }

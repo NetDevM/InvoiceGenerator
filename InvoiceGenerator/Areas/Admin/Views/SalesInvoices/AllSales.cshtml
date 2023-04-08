@@ -33,7 +33,7 @@
                             <th>Payment Status</th>
                             <th>Shipping</th>
                             <th>Discount(%)</th>
-                            <th>Grand Total</th>
+                            <th>Grand Total</th> 
                             <th>Action</th>
 
                         </tr>
@@ -48,8 +48,7 @@
                                 <td>@sale.PaymentStatus</td>
                                 <td>@sale.Shipping</td>
                                 <td>@sale.DiscountPercentage</td>
-                                <td>@sale.GrandTotal</td>
-
+                                <td>@sale.GrandTotal</td> 
                                 <td>
                                     <form style="float:right;" method="post" asp-route-salesinvoiceid="@sale.SalesInvoiceId" asp-action="DeleteSalesInvoice" asp-controller="SalesInvoices"
                                           onclick="return confirm('Are you sure you want to delete ?')">

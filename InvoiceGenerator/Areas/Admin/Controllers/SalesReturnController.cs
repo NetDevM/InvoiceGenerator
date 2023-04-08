@@ -63,14 +63,15 @@ namespace InvoiceGenerator.Areas.Admin.Controllers
                 ReturnedDate = DateTime.Now,
                 RefundableAmount = salesreturnvm.SalesReturn.RefundableAmount,
                 Reason = salesreturnvm.SalesReturn.Reason,
-                InvoiceCode=salesreturnvm.SalesReturn.InvoiceCode,  
+                InvoiceCode = salesreturnvm.SalesReturn.InvoiceCode,
 
             };
 
             status = await _salesReturnService.AddSalesReturn(salesreturnmodel);
 
-            if (status)
+            if (status) 
                 TempData[MyAlerts.SUCCESS] = "SalesReturn Added successfully!";
+             
             else
                 TempData[MyAlerts.ERROR] = "Error Occured Please try again!";
 
@@ -87,7 +88,7 @@ namespace InvoiceGenerator.Areas.Admin.Controllers
             PaymentViewModel model = await PopulateDropdownFoSalesReturn();
             var salesreturn = await _salesReturnService.GeSalesReturnById(salesreturnid);
             model.SalesReturn = salesreturn;
-            model.SelectedCustomerId = Convert.ToInt32(salesreturn.CustomerId);            
+            model.SelectedCustomerId = Convert.ToInt32(salesreturn.CustomerId);
             model.SelectedSalesInvoiceId = salesreturn.SalesInvoiceId;
             return View(model);
         }
@@ -105,9 +106,9 @@ namespace InvoiceGenerator.Areas.Admin.Controllers
 
             SalesReturn salesreturnmodel = new()
             {
-                Id=salesreturnvm.SalesReturn.Id,
+                Id = salesreturnvm.SalesReturn.Id,
                 CustomerId = salesreturnvm.SelectedCustomerId,
-                SalesInvoiceId = salesreturnvm.SelectedSalesInvoiceId, 
+                SalesInvoiceId = salesreturnvm.SelectedSalesInvoiceId,
                 RefundableAmount = salesreturnvm.SalesReturn.RefundableAmount,
                 Reason = salesreturnvm.SalesReturn.Reason,
                 InvoiceCode = salesreturnvm.SalesReturn.InvoiceCode,
@@ -136,7 +137,7 @@ namespace InvoiceGenerator.Areas.Admin.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> DeleteSalesReturn(int salesreturnid)
+        public async Task<IActionResult> DeleteSalesReturn(int salesreturnid,int salesinvoiceid)
         {
             bool status = false;
 
@@ -148,8 +149,8 @@ namespace InvoiceGenerator.Areas.Admin.Controllers
 
             status = await _salesReturnService.DeleteSalesReturn(salesreturnid);
 
-            if (status)
-                TempData[MyAlerts.SUCCESS] = "SalesReturn Deleted successfully!";
+            if (status) 
+                TempData[MyAlerts.SUCCESS] = "SalesReturn Deleted successfully!"; 
             else
                 TempData[MyAlerts.ERROR] = "Error Occured Please try again!";
 

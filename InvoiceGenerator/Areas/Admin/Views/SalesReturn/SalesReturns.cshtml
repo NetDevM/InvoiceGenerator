@@ -31,7 +31,7 @@
                             <th>SalesReturn Id</th>
                             <th>InvoiceID</th>
                             <th>Refundable Amount</th> 
-                            <th>Payment Date</th>
+                            <th>Returned Date</th>
                             <th>Action</th>
 
                         </tr>
@@ -46,7 +46,7 @@
                                 <td>@salesreturn.RefundableAmount</td>
                                 <td>@salesreturn.ReturnedDate.ToShortDateString()</td>
                                 <td>
-                                    <form style="float:right;" method="post" asp-route-salesreturnid="@salesreturn.Id" asp-action="DeleteSalesReturn" asp-controller="SalesReturn"
+                                    <form style="float:right;" method="post" asp-route-salesreturnid="@salesreturn.Id" asp-route-salesinvoiceid="@salesreturn.SalesInvoiceId" asp-action="DeleteSalesReturn" asp-controller="SalesReturn"
                                           onclick="return confirm('Are you sure you want to delete ?')">
                                         <button title="Delete" type="submit" class="btn"><i class="zmdi zmdi-delete zmdi-hc " aria-hidden="true"></i></button>
                                     </form>
