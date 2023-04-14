@@ -18,7 +18,10 @@ namespace InvoiceGenerator.Areas.Admin.Controllers
             _productService = productService;
         }
 
-
+        /// <summary>
+        /// show all products
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Products()
         {
@@ -26,6 +29,10 @@ namespace InvoiceGenerator.Areas.Admin.Controllers
             return View(allproducts);
         }
 
+        /// <summary>
+        /// create product get handler
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult CreateProduct()
         {
@@ -33,6 +40,11 @@ namespace InvoiceGenerator.Areas.Admin.Controllers
         }
 
 
+        /// <summary>
+        /// create product post handler
+        /// </summary>
+        /// <param name="product"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> CreateProduct(Product product)        {
             bool status = false;
@@ -51,6 +63,11 @@ namespace InvoiceGenerator.Areas.Admin.Controllers
         }
 
 
+        /// <summary>
+        /// edit product get handler
+        /// </summary>
+        /// <param name="productid"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> EditProduct(int productid)
         {
@@ -59,6 +76,12 @@ namespace InvoiceGenerator.Areas.Admin.Controllers
             return View(product);
         }
 
+
+        /// <summary>
+        /// edit product post handler
+        /// </summary>
+        /// <param name="product"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> EditProduct(Product product)
         {
@@ -72,6 +95,11 @@ namespace InvoiceGenerator.Areas.Admin.Controllers
             return View();
         }
 
+        /// <summary>
+        /// delete product handler
+        /// </summary>
+        /// <param name="productid"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> DeleteProduct(int productid)
         {

@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace InvoiceGenerator.Data
 {
+    /// <summary>
+    /// Application db context interaction to and from db
+    /// </summary>
     public class ApplicationDbContext : IdentityDbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)

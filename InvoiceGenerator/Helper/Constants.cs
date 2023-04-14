@@ -1,8 +1,11 @@
 ﻿namespace InvoiceGenerator.Helper
 {
+    /// <summary>
+    /// Payment status for displaying the status later
+    /// </summary>
     public class PaymentStatusConstants
     {
-        
+
         public static string Due
         {
             get
@@ -28,9 +31,13 @@
         }
     }
 
+
+    /// <summary>
+    /// payment method for sales invoice
+    /// </summary>
     public class PaymentMethodConstants
     {
-       
+
         public static string Cash
         {
             get
@@ -56,6 +63,6 @@
         }
 
 
-         
+
     }
 }

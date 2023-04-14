@@ -1,5 +1,4 @@
 ﻿using InvoiceGenerator.Interfaces;
-using InvoiceGenerator.Migrations;
 using InvoiceGenerator.Models;
 using InvoiceGenerator.Models.Notification;
 using Microsoft.AspNetCore.Authorization;
@@ -29,12 +28,21 @@ namespace InvoiceGenerator.Areas.Admin.Controllers
         }
 
 
+        /// <summary>
+        /// create customer get handler
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult CreateCustomer()
         {
             return View();
         }
 
+        /// <summary>
+        /// create customer post handler
+        /// </summary>
+        /// <param name="customer"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> CreateCustomer(Customer customer)
         {
@@ -54,6 +62,11 @@ namespace InvoiceGenerator.Areas.Admin.Controllers
         }
 
 
+        /// <summary>
+        /// edit customer get handler
+        /// </summary>
+        /// <param name="customerid"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> EditCustomer(int customerid)
         {
@@ -62,6 +75,12 @@ namespace InvoiceGenerator.Areas.Admin.Controllers
             return View(customer);
         }
 
+
+        /// <summary>
+        /// edit customer post handler
+        /// </summary>
+        /// <param name="customer"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> EditCustomer(Customer customer)
         {
@@ -76,6 +95,11 @@ namespace InvoiceGenerator.Areas.Admin.Controllers
         }
 
 
+        /// <summary>
+        /// delete customer post handler
+        /// </summary>
+        /// <param name="customerid"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> DeleteCustomer(int customerid)
         {

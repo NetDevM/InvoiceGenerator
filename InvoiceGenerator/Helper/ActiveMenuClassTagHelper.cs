@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace InvoiceGenerator.Helper
 {
+    /// <summary>
+    /// Html menu hilighter based on route by adding custom attribute
+    /// </summary>
     [HtmlTargetElement(Attributes = "is-active-route")]
     public class ActiveClassTagHelper : AnchorTagHelper
     {
@@ -13,6 +16,11 @@ namespace InvoiceGenerator.Helper
         {
         }
 
+        /// <summary>
+        /// add or remove hilighting/active menu class based on route and current controller ,action
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="output"></param>
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
             var routeData = ViewContext.RouteData.Values;

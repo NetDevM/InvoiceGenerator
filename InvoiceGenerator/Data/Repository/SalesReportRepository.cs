@@ -1,7 +1,6 @@
 ﻿using InvoiceGenerator.Interfaces;
 using InvoiceGenerator.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 
 namespace InvoiceGenerator.Data.Repository
 {
@@ -17,6 +16,12 @@ namespace InvoiceGenerator.Data.Repository
             _context = context;
         }
 
+        /// <summary>
+        /// get sales report by range
+        /// </summary>
+        /// <param name="fromdate"></param>
+        /// <param name="todate"></param>
+        /// <returns></returns>
         public async Task<List<SalesInvoice>> GetSalesInvoiceByDateRange(DateTime fromdate, DateTime todate)
         {
             var salesdata = await _context.SalesInvoices.Where(x => x.InvoicedOn >= fromdate && x.InvoicedOn <= todate)

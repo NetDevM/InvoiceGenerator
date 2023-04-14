@@ -24,6 +24,10 @@ namespace InvoiceGenerator.Areas.Admin.Controllers
 
         }
 
+        /// <summary>
+        /// get the dashboard data for the cards
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Index()
         {

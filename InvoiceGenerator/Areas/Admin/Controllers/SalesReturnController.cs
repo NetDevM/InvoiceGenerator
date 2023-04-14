@@ -25,6 +25,11 @@ namespace InvoiceGenerator.Areas.Admin.Controllers
 
         }
 
+
+        /// <summary>
+        /// all sales return list
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> SalesReturns()
         {
@@ -35,6 +40,10 @@ namespace InvoiceGenerator.Areas.Admin.Controllers
 
         }
 
+        /// <summary>
+        /// create new sales return
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> CreateSalesReturn()
         {
@@ -43,6 +52,12 @@ namespace InvoiceGenerator.Areas.Admin.Controllers
             return View(model);
         }
 
+
+        /// <summary>
+        /// post handler of sales return creation
+        /// </summary>
+        /// <param name="salesreturnvm"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> CreateSalesReturn(PaymentViewModel salesreturnvm)
         {
@@ -81,7 +96,11 @@ namespace InvoiceGenerator.Areas.Admin.Controllers
         }
 
 
-
+        /// <summary>
+        /// get screen of edit sales return
+        /// </summary>
+        /// <param name="salesreturnid"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> EditSalesReturn(int salesreturnid)
         {
@@ -93,6 +112,12 @@ namespace InvoiceGenerator.Areas.Admin.Controllers
             return View(model);
         }
 
+
+        /// <summary>
+        /// post handler of edit sales return
+        /// </summary>
+        /// <param name="salesreturnvm"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> EditSalesReturn(PaymentViewModel salesreturnvm)
         {
@@ -135,7 +160,12 @@ namespace InvoiceGenerator.Areas.Admin.Controllers
 
 
 
-
+        /// <summary>
+        /// delete sales return from table
+        /// </summary>
+        /// <param name="salesreturnid"></param>
+        /// <param name="salesinvoiceid"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> DeleteSalesReturn(int salesreturnid,int salesinvoiceid)
         {
@@ -158,6 +188,10 @@ namespace InvoiceGenerator.Areas.Admin.Controllers
         }
 
 
+        /// <summary>
+        /// populate customer and invoice dropdown
+        /// </summary>
+        /// <returns></returns>
         private async Task<PaymentViewModel> PopulateDropdownFoSalesReturn()
         {
             //populate productlist dropdown

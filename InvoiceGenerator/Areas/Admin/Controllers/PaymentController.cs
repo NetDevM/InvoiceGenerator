@@ -26,7 +26,10 @@ namespace InvoiceGenerator.Areas.Admin.Controllers
             _paymentService = paymentService;
         }
 
-
+        /// <summary>
+        /// get all payments
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Payments()
         {
@@ -36,7 +39,10 @@ namespace InvoiceGenerator.Areas.Admin.Controllers
             return View(allpayments);
         }
 
-
+        /// <summary>
+        /// create payment get handler
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> CreatePayment()
         {
@@ -45,6 +51,11 @@ namespace InvoiceGenerator.Areas.Admin.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// create payment post handler
+        /// </summary>
+        /// <param name="paymentvm"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> CreatePayment(PaymentViewModel paymentvm)
         {
@@ -83,9 +94,11 @@ namespace InvoiceGenerator.Areas.Admin.Controllers
             return View(model);
         }
 
-
-
-
+        /// <summary>
+        /// edit payment get handler
+        /// </summary>
+        /// <param name="paymentid"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> EditPayment(int paymentid)
         {
@@ -98,6 +111,11 @@ namespace InvoiceGenerator.Areas.Admin.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// edit payment post handler
+        /// </summary>
+        /// <param name="paymentvm"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> EditPayment(PaymentViewModel paymentvm)
         {
@@ -143,6 +161,11 @@ namespace InvoiceGenerator.Areas.Admin.Controllers
         }
 
 
+        /// <summary>
+        /// delete payment handler
+        /// </summary>
+        /// <param name="paymentid"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> DeletePayment(int paymentid)
         {
@@ -165,6 +188,10 @@ namespace InvoiceGenerator.Areas.Admin.Controllers
         }
 
 
+        /// <summary>
+        /// populate salesinvoices and customer dropdown
+        /// </summary>
+        /// <returns></returns>
         private async Task<PaymentViewModel> PopulateDropdownForPayment()
         {
             //populate productlist dropdown

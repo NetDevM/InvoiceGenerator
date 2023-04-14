@@ -38,6 +38,12 @@ namespace InvoiceGenerator.Areas.Admin.Controllers
             return View(reportsViewModel);
         }
 
+        /// <summary>
+        /// post handler of report creation
+        /// </summary>
+        /// <param name="fromdate"></param>
+        /// <param name="todate"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Reports(DateTime fromdate, DateTime todate)
         {

@@ -24,6 +24,10 @@ namespace InvoiceGenerator.Areas.Admin.Controllers
             _userManager = userManager;
         }
 
+        /// <summary>
+        /// Get all the store settings
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> StoreSetting()
         {
@@ -36,6 +40,11 @@ namespace InvoiceGenerator.Areas.Admin.Controllers
                 return View(new StoreSettings());
         }
 
+        /// <summary>
+        /// add store setting
+        /// </summary>
+        /// <param name="storesettings"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> StoreSetting(StoreSettings storesettings)
         {
@@ -103,6 +112,10 @@ namespace InvoiceGenerator.Areas.Admin.Controllers
 
         }
 
+        /// <summary>
+        /// reset password for admin
+        /// </summary>
+        /// <returns></returns>
 
         [HttpGet]
         public IActionResult ResetPassword()
@@ -110,6 +123,11 @@ namespace InvoiceGenerator.Areas.Admin.Controllers
             return View();
         }
 
+        /// <summary>
+        /// post handler for reset admin
+        /// </summary>
+        /// <param name="passwordResetModel"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> ResetPassword(PasswordResetModel passwordResetModel)
         {
