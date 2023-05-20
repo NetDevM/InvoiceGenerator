@@ -23,3 +23,6 @@ Application Features :
 + Generate Sales invoices and can be exported in PDF format
 
 + Nice and Clean Design for admin
+
+# Database
+* change the database connection string before running the update script/migrations
